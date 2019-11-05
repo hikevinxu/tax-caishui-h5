@@ -1,0 +1,110 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+
+Router.prototype.goBack = function () {
+  this.isBack = true
+  window.history.back()
+}
+
+Vue.use(Router)
+
+export default new Router({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes: [
+    {
+      path: '/',
+      redirect: '/home'
+    },
+    {
+      path: '/mainFrame',
+      name: 'mainFrame',
+      component: () => import('../components/Home/mainFrame.vue'),
+      children: [
+        {
+          path: '/home',
+          name: 'home',
+          component: () => import('../views/home/home.vue'),
+          meta: {
+            title: '找服务'
+          }
+        },
+        {
+          path: '/inquiry',
+          name: 'inquiry',
+          component: () => import('../views/home/inquiry.vue'),
+          meta: {
+            title: '询价'
+          }
+        },
+        {
+          path: '/mine',
+          name: 'mine',
+          component: () => import('../views/home/mine.vue'),
+          meta: {
+            title: '我的'
+          }
+        },
+      ]
+    },
+    {
+      path: '/addEnquiry',
+      name: 'addEnquiry',
+      component: () => import('../views/addEnquiry/addEnquiry.vue'),
+      meta: {
+        title: '提交询价单'
+      }
+    },
+    {
+      path: '/area',
+      name: 'area',
+      component: () => import('../views/addEnquiry/area.vue'),
+      meta: {
+        title: '地区选择'
+      }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/login/login.vue'),
+      meta: {
+        title: '登陆'
+      }
+    },
+    {
+      path: '/powerOfAttoney',
+      name: 'powerOfAttoney',
+      component: () => import('../views/login/powerOfAttoney.vue'),
+      meta: {
+        title: '协议'
+      }
+    },
+    {
+      path: '/netError',
+      name: 'netError',
+      component: () => import('../views/errorPage/netError.vue'),
+      meta: {
+        title: '网络错误'
+      }
+    },
+    {
+      path: '/404',
+      name: 'error404',
+      component: () => import('../views/errorPage/error404.vue'),
+      meta: {
+        title: '404'
+      }
+    },
+    {
+      path: '*',
+      redirect: '/404'
+    }
+  ],
+  scrollBehavior(to, from, saveTop){
+    if (saveTop) {
+      return saveTop
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
+})

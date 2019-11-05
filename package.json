@@ -1,0 +1,47 @@
+{
+  "name": "shuiwushi",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build --mode prod",
+    "build:prod": "vue-cli-service build --mode prod",
+    "lint": "vue-cli-service lint",
+    "build:sit": "vue-cli-service build --mode sit",
+    "dev": "vue-cli-service serve --open --mode dev",
+    "all": "yarn build:prod && yarn build:sit"
+  },
+  "dependencies": {
+    "amfe-flexible": "^2.2.1",
+    "autoprefixer": "^9.5.1",
+    "axios": "^0.18.0",
+    "core-js": "^2.6.5",
+    "es6-promise": "^4.2.6",
+    "qs": "^6.7.0",
+    "sa-sdk-javascript": "^1.13.5",
+    "vant": "^2.2.10",
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.3",
+    "vuex": "^3.0.1",
+    "zip-webpack-plugin": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.6.0",
+    "@vue/cli-plugin-eslint": "^3.6.0",
+    "@vue/cli-service": "^3.6.0",
+    "@vue/eslint-config-standard": "^4.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-import": "^1.8.0",
+    "babel-polyfill": "^6.26.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "node-sass": "^4.11.0",
+    "postcss-pxtorem": "^4.0.1",
+    "sass-loader": "^7.1.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "vconsole": "^3.3.0",
+    "vue-cli-plugin-mand": "^0.3.0",
+    "vue-template-compiler": "^2.5.21"
+  }
+}
