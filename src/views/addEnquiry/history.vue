@@ -13,7 +13,7 @@
           <EnquiryListItem :enquiryData="enquiryItem"  class="listItem_inner" />
         </div>
       </div>
-      <div class="finish" v-if="intentionList.length == total">已经到底了</div>
+      <div class="finish" v-if="over">已经到底了</div>
       <div class="loadingList" v-else>正在加载中...</div>
     </div>
   </div>
@@ -44,6 +44,7 @@ export default {
       total: undefined,
       loading: false,
       finished: false,
+      over: false,
       timer: undefined
     }
   },
@@ -82,6 +83,7 @@ export default {
             }
           } else {
             this.finished = true
+            this.over = true
           }
         }
       }).catch(err => {

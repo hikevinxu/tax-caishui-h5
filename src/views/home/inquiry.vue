@@ -21,7 +21,7 @@
         </div>
         <Demand-Loading :num="item.serviceIntentionList.length - item.serviceIntentionListH5.length" v-if="item.serviceIntentionListH5.length != 0" />
       </div>
-      <div class="finish" v-if="intentionList.length == total">已经到底了</div>
+      <div class="finish" v-if="over">已经到底了</div>
       <div class="loadingList" v-else>正在加载中...</div>
     </div>
   </div>
@@ -58,6 +58,7 @@ export default {
       total: 0,
       loading: false,
       finished: false,
+      over: false,
       timer: undefined
     }
   },
@@ -96,6 +97,7 @@ export default {
             }
           } else {
             this.finished = true
+            this.over = true
           }
         }
       }).catch(err => {

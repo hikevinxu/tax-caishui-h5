@@ -2,7 +2,7 @@
   <div class="home_page">
     <Header title="所有服务" />
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-      <div class="banner">
+      <div class="banner" v-if="bannerImg.length > 0">
         <van-swipe :autoplay="3000" indicator-color="#FF7F4A">
           <van-swipe-item v-for="(image, index) in bannerImg" :key="index" @click="jumpAdert(image, index)">
             <img v-lazy="image.elementValue" />
