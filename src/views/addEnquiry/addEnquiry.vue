@@ -267,7 +267,7 @@ export default {
       }
       enquiryApi.intentionCreate(params).then(res => {
         if(res.code == 0) {
-          sa.quick("WebUserEnquiryClick",{
+          sa.track("WebUserEnquiryClick",{
             code: this.$route.query.code,
             name: this.$route.query.name
           })

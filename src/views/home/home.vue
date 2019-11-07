@@ -82,7 +82,7 @@ export default {
       }
       enquiryApi.intentionCheck(params).then(res => {
         if(res.code == 0){
-          sa.quick("WebServiceClick",{
+          sa.track("WebServiceClick",{
             code: item.code,
             name: item.name
           })
@@ -96,7 +96,7 @@ export default {
     },
     jumpAdert(item, index) {
       if (item.goType == 1) {
-        sa.quick("WebAdvertClick",{
+        sa.track("WebAdvertClick",{
           code: item.positionNo,
           name: item.positionName,
           index: index,
