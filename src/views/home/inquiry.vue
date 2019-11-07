@@ -9,25 +9,20 @@
       <span class="history" @click="goHistory">历史记录</span>
     </div>
     <No-Demand v-if="intentionList.length == 0" />
-    <div v-else class="inquiryRecord">
-        <van-list
-          v-model="loading"
-          :finished="finished"
-          finished-text=""
-          @load="onLoad"
-        >
-        <div class="recordList" v-for="(item, index) in intentionList" :key="'intention' + index">
-          <div class="demand">
-            <span class="demandName">需求：{{item.intention}}</span>
-            <span class="demandTime">{{item.lastModifyTime}}</span>
-          </div>
-          <No-Enquiry :num="item.serviceIntentionList.length - item.serviceIntentionListH5.length" v-if="item.serviceIntentionListH5.length == 0" />
-          <div class="listItem" v-else v-for="(enquiryItem, enquiryIndex) in item.serviceIntentionListH5" :key="'enquiry' + enquiryIndex" >
-            <EnquiryListItem :enquiryData="enquiryItem"  class="listItem_inner" />
-          </div>
-          <Demand-Loading :num="item.serviceIntentionList.length - item.serviceIntentionListH5.length" v-if="item.serviceIntentionListH5.length != 0" />
+    <div v-else class="inquiryRecord" ref="scroll" @scroll="loadMore">
+      <div class="recordList" v-for="(item, index) in intentionList" :key="'intention' + index">
+        <div class="demand">
+          <span class="demandName">需求：{{item.intention}}</span>
+          <span class="demandTime">{{item.lastModifyTime}}</span>
         </div>
-      </van-list>
+        <No-Enquiry :num="item.serviceIntentionList.length - item.serviceIntentionListH5.length" v-if="item.serviceIntentionListH5.length == 0" />
+        <div class="listItem" v-else v-for="(enquiryItem, enquiryIndex) in item.serviceIntentionListH5" :key="'enquiry' + enquiryIndex" >
+          <EnquiryListItem :enquiryData="enquiryItem"  class="listItem_inner" />
+        </div>
+        <Demand-Loading :num="item.serviceIntentionList.length - item.serviceIntentionListH5.length" v-if="item.serviceIntentionListH5.length != 0" />
+      </div>
+      <div class="finish" v-if="intentionList.length == total">已经到底了</div>
+      <div class="loadingList" v-else>正在加载中...</div>
     </div>
   </div>
 </template>
@@ -62,7 +57,8 @@ export default {
       intentionList: [],
       total: 0,
       loading: false,
-      finished: false
+      finished: false,
+      timer: undefined
     }
   },
   created() {
@@ -70,27 +66,35 @@ export default {
       $title: '询价页',
       $screen_name: `enquiry_page`
     })
+    window.addEventListener('scroll',this.loadMore)
     this.getList()
   },
   methods: {
     getList() {
       // 获取获取询价单列表-有效
+      this.finished = true
       enquiry.intentionListNow(this.listQuery).then(res => {
         if(res.code == 0){
-          for(let i=0;i<res.data.items.length;i++) {
-            let serviceIntentionListH5 = []
-            for(let j=0;j<res.data.items[i].serviceIntentionList.length;j++) {
-              if (res.data.items[i].serviceIntentionList[j].quotedPrice || res.data.items[i].serviceIntentionList[j].status == 3) {
-                serviceIntentionListH5.push(res.data.items[i].serviceIntentionList[j])
+          if(res.data.items.length > 0){
+            for(let i=0;i<res.data.items.length;i++) {
+              let serviceIntentionListH5 = []
+              for(let j=0;j<res.data.items[i].serviceIntentionList.length;j++) {
+                if (res.data.items[i].serviceIntentionList[j].quotedPrice || res.data.items[i].serviceIntentionList[j].status == 3) {
+                  serviceIntentionListH5.push(res.data.items[i].serviceIntentionList[j])
+                }
               }
+              res.data.items[i].serviceIntentionListH5 = serviceIntentionListH5
             }
-            res.data.items[i].serviceIntentionListH5 = serviceIntentionListH5
-          }
-          this.intentionList = this.intentionList.concat(res.data.items)
-          this.total = res.data.total
-          this.listQuery.pageNum++
-          // 数据全部加载完成
-          if (this.intentionList.length >= this.total) {
+            this.intentionList = this.intentionList.concat(res.data.items)
+            this.total = res.data.total
+            this.listQuery.pageNum++
+            // 数据全部加载完成
+            if (this.intentionList.length >= this.total) {
+              this.finished = true
+            } else {
+              this.finished = false
+            }
+          } else {
             this.finished = true
           }
         }
@@ -99,15 +103,18 @@ export default {
         console.log(err)
       })
     },
-    onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        if (!this.finished) {
-          this.getList()
-        }
-        // 加载状态结束
-        this.loading = false
-      }, 500)
+    loadMore(e) {
+      // 卷去的高度   当前可见区域  总高
+      // 触发scroll事件 可能触发n次  先进来开一个定时器，下次触发时将上一次定时器清除掉
+      if(!this.finished) {
+        clearTimeout(this.timer)  // 节流
+        this.timer = setTimeout(()=>{
+          let {scrollTop,clientHeight,scrollHeight} = e.target.scrollingElement
+          if(scrollTop + clientHeight + 20 > scrollHeight){
+            this.getList()  // 获取更多
+          }
+        },60)
+      }
     },
     goHistory() {
       this.$router.push('history')

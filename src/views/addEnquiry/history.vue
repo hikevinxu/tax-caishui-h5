@@ -2,7 +2,7 @@
   <div class="inquiry_page">
     <Header title="历史记录" :isBack="true" />
     <Empty-List message="暂无记录" v-if="total == 0" />
-    <div class="inquiryRecord" ref="scroll" @scroll="loadMore">
+    <div v-else class="inquiryRecord" ref="scroll" @scroll="loadMore">
       <div class="recordList" v-for="(item, index) in intentionList" :key="'intention' + index">
         <div class="demand">
           <span class="demandName">需求：{{item.intention}}</span>
@@ -61,23 +61,27 @@ export default {
       this.finished = true
       enquiry.intentionListHistory(this.listQuery).then(res => {
         if(res.code == 0){
-          for(let i=0;i<res.data.items.length;i++) {
-            let serviceIntentionListH5 = []
-            for(let j=0;j<res.data.items[i].serviceIntentionList.length;j++) {
-              if (res.data.items[i].serviceIntentionList[j].quotedPrice || res.data.items[i].serviceIntentionList[j].status == 3) {
-                serviceIntentionListH5.push(res.data.items[i].serviceIntentionList[j])
+          if (res.data.items.length > 0) {
+            for(let i=0;i<res.data.items.length;i++) {
+              let serviceIntentionListH5 = []
+              for(let j=0;j<res.data.items[i].serviceIntentionList.length;j++) {
+                if (res.data.items[i].serviceIntentionList[j].quotedPrice || res.data.items[i].serviceIntentionList[j].status == 3) {
+                  serviceIntentionListH5.push(res.data.items[i].serviceIntentionList[j])
+                }
               }
+              res.data.items[i].serviceIntentionListH5 = serviceIntentionListH5
             }
-            res.data.items[i].serviceIntentionListH5 = serviceIntentionListH5
-          }
-          this.intentionList = this.intentionList.concat(res.data.items)
-          this.total = res.data.total
-          this.listQuery.pageNum++
-          // 数据全部加载完成
-          if (this.intentionList.length >= this.total) {
-            this.finished = true
+            this.intentionList = this.intentionList.concat(res.data.items)
+            this.total = res.data.total
+            this.listQuery.pageNum++
+            // 数据全部加载完成
+            if (this.intentionList.length >= this.total) {
+              this.finished = true
+            } else {
+              this.finished = false
+            }
           } else {
-            this.finished = false
+            this.finished = true
           }
         }
       }).catch(err => {
