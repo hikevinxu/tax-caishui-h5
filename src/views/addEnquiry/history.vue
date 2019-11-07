@@ -2,25 +2,19 @@
   <div class="inquiry_page">
     <Header title="历史记录" :isBack="true" />
     <Empty-List message="暂无记录" v-if="total == 0" />
-    <div class="inquiryRecord">
-        <van-list
-          v-model="loading"
-          :offset="50"
-          :finished="finished"
-          finished-text=""
-          @load="onLoad"
-        >
-        <div class="recordList" v-for="(item, index) in intentionList" :key="'intention' + index">
-          <div class="demand">
-            <span class="demandName">需求：{{item.intention}}</span>
-            <span class="demandTime">{{item.lastModifyTime}}</span>
-          </div>
-          <No-Enquiry v-if="item.serviceIntentionListH5.length == 0" :page="page" />
-          <div class="listItem" v-for="(enquiryItem, enquiryIndex) in item.serviceIntentionListH5" :key="'enquiry' + enquiryIndex" >
-            <EnquiryListItem :enquiryData="enquiryItem"  class="listItem_inner" />
-          </div>
+    <div class="inquiryRecord" ref="scroll" @scroll="loadMore">
+      <div class="recordList" v-for="(item, index) in intentionList" :key="'intention' + index">
+        <div class="demand">
+          <span class="demandName">需求：{{item.intention}}</span>
+          <span class="demandTime">{{item.lastModifyTime}}</span>
         </div>
-      </van-list>
+        <No-Enquiry v-if="item.serviceIntentionListH5.length == 0" :page="page" />
+        <div class="listItem" v-for="(enquiryItem, enquiryIndex) in item.serviceIntentionListH5" :key="'enquiry' + enquiryIndex" >
+          <EnquiryListItem :enquiryData="enquiryItem"  class="listItem_inner" />
+        </div>
+      </div>
+      <div class="finish" v-if="intentionList.length == total">已经到底了</div>
+      <div class="loadingList" v-else>正在加载中...</div>
     </div>
   </div>
 </template>
@@ -31,10 +25,7 @@ import EmptyList from '@/components/EmptyList/EmptyList'
 import NoEnquiry from '@/components/NoEnquiry/index'
 import enquiry from '@/api/enquiry'
 import sa from 'sa-sdk-javascript'
-import Vue from 'vue'
-import { List } from 'vant'
 
-Vue.use(List)
 export default {
   components: {
     Header,
@@ -52,15 +43,17 @@ export default {
       intentionList: [],
       total: undefined,
       loading: false,
-      finished: false
+      finished: false,
+      timer: undefined
     }
   },
   created() {
-    // this.getList()
+    this.getList()
     sa.quick("autoTrackSinglePage",{
       $title: '询价历史列表页',
       $screen_name: `enquiry_history_page`
     })
+    window.addEventListener('scroll',this.loadMore)
   },
   methods: {
     getList() {
@@ -92,15 +85,18 @@ export default {
         console.log(err)
       })
     },
-    onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        if (!this.finished) {
-          this.getList()
-        }
-        // 加载状态结束
-        this.loading = false
-      }, 500)
+    loadMore(e) {
+      // 卷去的高度   当前可见区域  总高
+      // 触发scroll事件 可能触发n次  先进来开一个定时器，下次触发时将上一次定时器清除掉
+      if(!this.finished) {
+        clearTimeout(this.timer)  // 节流
+        this.timer = setTimeout(()=>{
+          let {scrollTop,clientHeight,scrollHeight} = e.target.scrollingElement
+          if(scrollTop + clientHeight + 20 > scrollHeight){
+            this.getList()  // 获取更多
+          }
+        },60)
+      }
     }
   }
 }
@@ -165,6 +161,18 @@ export default {
           border-bottom: 0;
         }
       }
+    }
+    .finish {
+      font-family: PingFangSC-Regular;
+      font-size: 14px;
+      color: rgba(0,0,0,0.60);
+      padding-bottom: 30px;
+    }
+    .loadingList {
+      font-family: PingFangSC-Regular;
+      font-size: 14px;
+      color: rgba(0,0,0,0.60);
+      padding-bottom: 30px;
     }
   }
 }
