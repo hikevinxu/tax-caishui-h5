@@ -5,7 +5,7 @@
     </div>
     <div class="nothingNotice">当前暂无报价需求</div>
     <div class="freeEnquiryBtn">
-      <van-button type="primary" size="large">免 费 询 价</van-button>
+      <van-button type="primary" size="large" @click="freeEnquiry">免 费 询 价</van-button>
     </div>
   </div>
 </template>
@@ -17,6 +17,14 @@ export default {
   data() {
     return {
 
+    }
+  },
+  created() {
+
+  },
+  methods: {
+    freeEnquiry() {
+      this.$router.push('/home')
     }
   }
 }

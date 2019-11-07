@@ -3,8 +3,8 @@
     <Header title="所有服务" />
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <div class="banner">
-        <van-swipe :autoplay="3000">
-          <van-swipe-item v-for="(image, index) in bannerImg" :key="index">
+        <van-swipe :autoplay="3000" indicator-color="#FF7F4A">
+          <van-swipe-item v-for="(image, index) in bannerImg" :key="index" @click="jumpAdert">
             <img v-lazy="image.elementValue" />
           </van-swipe-item>
         </van-swipe>
@@ -30,6 +30,8 @@ import Vue from 'vue'
 import { PullRefresh, Skeleton, Swipe, SwipeItem, Lazyload, Row, Col } from 'vant'
 Vue.use(PullRefresh).use(Skeleton).use(Swipe).use(SwipeItem).use(Lazyload, {preload: '120px'}).use(Row).use(Col)
 import globalApi from '@/api/globalApi'
+import enquiryApi from '@/api/enquiry'
+import sa from 'sa-sdk-javascript'
 export default {
   components: {
     Header
@@ -42,6 +44,10 @@ export default {
     }
   },
   created() {
+    sa.quick("autoTrackSinglePage",{
+      $title: '分类页',
+      $screen_name: `category_page`
+    })
     this.init()
   },
   methods: {
@@ -69,7 +75,25 @@ export default {
       })
     },
     addEnquiry(item) {
-      this.$router.push('addEnquiry')
+      let params = {
+        serviceCode: item.code
+      }
+      enquiryApi.intentionCheck(params).then(res => {
+        if(res.code == 0){
+          sa.quick("WebServiceClick",{
+            code: item.code,
+            name: item.name
+          })
+          if (res.data) {
+            this.$router.push('addEnquiry?code=' + item.code + '&name=' + item.name)
+          } else {
+            this.$router.push('inquiry')
+          }
+        }
+      })
+    },
+    jumpAdert() {
+
     }
   }
 }

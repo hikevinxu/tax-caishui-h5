@@ -7,6 +7,7 @@ let state = {
   title: '',
   jumpUrl: '',
   token: '',
+  userPhone: '',
   payInfo: ''
 }
 

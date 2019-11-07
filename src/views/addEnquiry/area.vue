@@ -9,15 +9,15 @@
         <div :class="countryActive == 2 ? 'tab active' : 'tab'" @click="changeCountry(2)">海外</div>
       </div>
     </div>
-    <div class="searchBar">
-      <span class="searchIcon">
-        <img src="@/assets/global/ic_search.png" alt="">
-      </span>
-      <input type="text" placeholder="请输入城市名称或首字母查询">
-    </div>
-    <div class="areaList">
-      <van-index-bar :index-list="indexList" :sticky="false" :sticky-offset-top="56" highlight-color="#FF7F4A">
-        <div class="hotCity">
+    <div class="body">
+      <div class="searchBar">
+        <span class="searchIcon">
+          <img src="@/assets/global/ic_search.png" alt="">
+        </span>
+        <input v-model="searchText" @input="searchChange" type="text" placeholder="请输入城市名称或首字母查询">
+      </div>
+      <div class="areaList">
+        <div class="hotCity" v-if="countryActive == 1">
           <div class="hotCityTitle">热门城市</div>
           <van-row class="hotCityList" gutter="20">
             <van-col v-for="(item, index) in hotCityList" :key="'hotCity' + index" class="hotCityItem" span="8">
@@ -25,52 +25,15 @@
             </van-col>
           </van-row>
         </div>
-        <van-index-anchor index="A" />
-        <ul>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-        </ul>
-        <van-index-anchor index="B" />
-        <ul>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-        </ul>
-        <van-index-anchor index="C" />
-        <ul>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-          <li>北京</li>
-        </ul>
-      </van-index-bar>
+        <van-index-bar :index-list="indexList" :sticky="true" :sticky-offset-top="0" highlight-color="#FF7F4A">
+          <div v-for="(cityIndex, index) in cityList" :key="'cityIndex' + index">
+            <van-index-anchor :index="cityIndex.indexBar" />
+            <ul>
+              <li v-for="(city, index) in cityIndex.childs" :key="'city' + index" @click="selectCity(city)">{{city.name}}</li>
+            </ul>
+          </div>
+        </van-index-bar>
+      </div>
     </div>
     <van-popup
       v-model="areaShow"
@@ -79,7 +42,7 @@
       position="bottom"
       :style="{ height: '80%' }"
     >
-      <Area-Select />
+      <Area-Select :areaSelectData="areaSelectData" @areaSelect="selectCityChange" />
     </van-popup>
   </div>
 </template>
@@ -90,6 +53,7 @@ import Vue from 'vue'
 import { IndexBar, IndexAnchor, Row, Col, Popup } from 'vant'
 Vue.use(IndexBar).use(IndexAnchor).use(Row).use(Col).use(Popup)
 import globalApi from '@/api/globalApi'
+import { eventManager } from '@/utils/global'
 
 export default {
   components: {
@@ -98,21 +62,25 @@ export default {
   data() {
     return {
       countryActive: 1,
-      indexList: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
+      searchText: '',
+      indexList: [],
       hotCityList: [],
       cityList: [],
+      searchList: [],
+      cityTree: [],
       overseaCityList: [],
-      areaShow: false
+      areaShow: false,
+      areaSelectData: {}
     }
   },
   created() {
     this.getAddressHotCitys()
     this.getAddressTrees()
-    this.getAddressOverseasTree()
   },
   methods: {
     back(){
-      this.$router.go(-1)
+      // this.$router.go(-1)
+      this.$emit('closeAreaSelect')
     },
     getAddressHotCitys() {
       globalApi.addressHotCitys().then(res => {
@@ -124,31 +92,108 @@ export default {
     getAddressTrees() {
       globalApi.addressTrees().then(res => {
         if(res.code == 0){
+          this.cityTree= res.data
           let cityTree = res.data
-          let cityList = []
+          let searchList = []
           for(let i=0;i<cityTree.length;i++) {
             for(let j=0;j<cityTree[i].childs.length;j++) {
-              cityList.push(cityTree[i].childs[j])
+              cityTree[i].childs[j].parentName = cityTree[i].name
+              searchList.push(cityTree[i].childs[j])
             }
           }
-          this.cityList = cityList
-          console.log(this.cityList)
+          this.searchList = searchList
+          this.getCityListBySearchList(searchList)
         }
       })
+    },
+    // 把城市列表转成indexBar数据格式
+    getCityListBySearchList(searchList) {
+      let citySP = []
+      let citySPList = []
+      for(var i=0;i<26;i++){
+        citySP.push(String.fromCharCode(65+i))
+        let obj = {
+          indexBar: String.fromCharCode(65+i),
+          childs: []
+        }
+        for(let j=0;j<searchList.length;j++) {
+          if(searchList[j].firstPinYin == String.fromCharCode(65+i)){
+            obj.childs.push(searchList[j])
+          }
+        }
+        citySPList.push(obj)
+      }
+      this.indexList = citySP
+      this.cityList = citySPList
     },
     getAddressOverseasTree() {
       globalApi.addressOverseasTree().then(res => {
         if(res.code == 0){
           this.overseaCityList = res.data
+          let overseaCityTree = res.data
+          let searchList = []
+          for(let i=0;i<overseaCityTree.length;i++) {
+            if(overseaCityTree[i].childs && overseaCityTree[i].childs.length > 0) {
+              searchList.push(...overseaCityTree[i].childs)
+            } else {
+              searchList.push(overseaCityTree[i])
+            }
+          }
+          this.getCityListBySearchList(searchList)
         }
       })
     },
     selectCity(val) {
+      if(this.countryActive == 2) {
+        // eventManager.returnEvent('selectArea', val)
+        // this.$router.back(-1)
+        this.$emit('selectCityChange', val)
+      } else {
+        for(let i=0;i<this.searchList.length;i++){
+          if(this.searchList[i].code == val.code) {
+            this.areaSelectData = this.searchList[i]
+          }
+        }
+        this.areaShow = true
+      }
+    },
+    selectCityChange(val) {
       console.log(val)
-      this.areaShow = true
+      val.name = val.provinceName + '-' + val.cityName + '-' + val.name
+      // eventManager.returnEvent('selectArea', val)
+      this.$emit('selectCityChange', val)
+      this.areaShow = false
+      // this.$router.back(-1)
     },
     changeCountry(index) {
       this.countryActive = index
+      if (index == 1) {
+        this.getAddressTrees()
+      }else if(index == 2) {
+        this.getAddressOverseasTree()
+      }
+    },
+    searchChange() {
+      console.log(this.searchText.substring(0, 1))
+      let engReg = /[[a-zA-Z]/
+      let chiReg = /[\u4e00-\u9fa5]/
+      if (engReg.test(this.searchText.substring(0, 1))) {
+        let arr = []
+        for(let i=0;i<this.searchList.length;i++) {
+          if(this.searchText.substring(0, 1) == this.searchList[i].firstPinYin) {
+            arr.push(this.searchList[i])
+          }
+        }
+        this.getCityListBySearchList(arr)
+      } else {
+        let arr = []
+        for(let i=0;i<this.searchList.length;i++) {
+          if(this.searchList[i].name.indexOf(this.searchText) != -1) {
+            arr.push(this.searchList[i])
+          }
+        }
+        this.getCityListBySearchList(arr)
+      }
     }
   }
 }
@@ -156,6 +201,12 @@ export default {
 <style lang="scss" scoped>
 .area_page {
   padding-top: 56px;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
   .header {
     width: 100%;
     height: 56px;
@@ -202,7 +253,6 @@ export default {
         font-size: 14px;
         color: rgba(0,0,0,0.26);
         text-align: center;
-        line-height: 28px;
         &:last-child {
           border-radius: 0 4px 4px 0;
           border: 1px solid rgba(0,0,0,0.26);
@@ -215,6 +265,11 @@ export default {
         color: #fff;
       }
     }
+  }
+  .body {
+    flex: 1;
+    overflow: scroll;
+    position: relative;
   }
   .searchBar {
     margin: 0 16px;

@@ -2,50 +2,73 @@
   <div class="EnquiryListItem">
     <div class="info">
       <div class="companyLogo">
-        <img src="../../assets/InquiryImg/ic_message.png" alt="" />
-        <div class="markLogo">
+        <img v-if="enquiryData.company.logo != ''" :src="enquiryData.company.logo" alt="" />
+        <img v-if="enquiryData.company.logo == '' && enquiryData.company.id % 3 == 0" src="../../assets/InquiryImg/company1.png" alt="" />
+        <img v-if="enquiryData.company.logo == '' && enquiryData.company.id % 3 == 1" src="../../assets/InquiryImg/company2.png" alt="" />
+        <img v-if="enquiryData.company.logo == '' && enquiryData.company.id % 3 == 2" src="../../assets/InquiryImg/company3.png" alt="" />
+        <div class="markLogo" v-if="enquiryData.company.bindMerchant">
           <img src="../../assets/InquiryImg/ic_list_tag.png" alt="" />
         </div>
-        <div class="recommend">客服推荐</div>
+        <!-- <div class="recommend">客服推荐</div> -->
       </div>
       <div class="companyInfo">
         <div class="title">
-          <span>杭勤商务秘书有限公司</span>
-          <img src="../../assets/InquiryImg/V1_12.png" alt="" />
+          <span>{{enquiryData.company.name}}</span>
+          <img v-if="enquiryData.company.level == 1" src="../../assets/InquiryImg/V1_12.png" alt="" />
+          <img v-if="enquiryData.company.level == 2" src="../../assets/InquiryImg/V2_12.png" alt="" />
+          <img v-if="enquiryData.company.level == 3" src="../../assets/InquiryImg/V3_12.png" alt="" />
         </div>
         <div class="otherInfo">
           <div class="companyAddress">
-            <span class="companyStatus">已认证</span>
+            <span class="companyStatus" v-if="enquiryData.company.bindMerchant">已认证</span>
             <img src="../../assets/InquiryImg/firm_ic_address.png" alt="" />
-            <span>西湖区</span>&nbsp;|&nbsp;
-            <span>135m</span>
+            <span>{{enquiryData.company.areaName}}</span>
           </div>
           <div class="companyService">
-            <span>主营:公司注册/代理记账/税务筹司注册/代理记账/税务筹…</span>
+            <span>主营:{{enquiryData.company.mainServiceString}}</span>
           </div>
         </div>
       </div>
       <span class="halvingLine"></span>
       <div class="status">
-        <span>超时<br />未报价</span>
+        <!-- <span v-if="enquiryData.intentionInfoBo.status == 1">报价中</span>
+        <span v-if="enquiryData.intentionInfoBo.status == 2">超时<br />未报价</span>
+        <span v-if="enquiryData.intentionInfoBo.status == 3">已报价</span>
+        <span v-if="enquiryData.intentionInfoBo.status == 4">{{enquiryData.intentionInfoBo.quotedPrice}}</span> -->
+        <span v-if="enquiryData.intentionInfoBo.quotedPrice">{{enquiryData.intentionInfoBo.quotedPrice/100}}元</span>
+        <span v-if="enquiryData.intentionInfoBo.status == 3" style="color: rgba(0,0,0,0.26);">已报价</span>
       </div>
     </div>
-    <p class="notifyMessage">服务商5分钟内会联系您</p>
+    <p class="notifyMessage" v-if="enquiryData.tips">{{enquiryData.tips}}</p>
   </div>
 </template>
 <script>
 export default {
+  props: {
+    enquiryData: {
+      type: Object,
+      default: {}
+    }
+  },
   data() {
     return {
 
     }
+  },
+  created() {
+    console.log(this.enquiryData)
+    let mainServiceList = []
+    for(let i=0;i<this.enquiryData.company.mainServiceList.length;i++) {
+      mainServiceList.push(this.enquiryData.company.mainServiceList[i].name)
+    }
+    this.enquiryData.company.mainServiceString = mainServiceList.join('/')
   }
 }
 </script>
 <style lang="scss" scoped>
 .EnquiryListItem {
   margin: 20px 16px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   .info {
     display: flex;
     flex-direction: row;

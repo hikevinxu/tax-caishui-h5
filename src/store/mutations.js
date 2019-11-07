@@ -14,6 +14,11 @@ let mutations = {
     console.log(token)
     localStorage.setItem('token', token)
   },
+  update_user_phone(state, userPhone) {
+    state.userPhone = userPhone
+    console.log(userPhone)
+    localStorage.setItem('userPhone', userPhone)
+  },
   update_jumpUrl(state, jumpUrl) {
     state.jumpUrl = jumpUrl
     localStorage.setItem('jumpUrl', jumpUrl)

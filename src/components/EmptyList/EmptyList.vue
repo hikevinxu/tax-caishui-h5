@@ -4,13 +4,19 @@
       <img src="@/assets/error/empty.png" alt="">
     </div>
     <div class="info">
-      未找到相关结果
+      {{message}}
     </div>
   </div>
 </template>
 <script>
 export default {
   name: 'emptyList',
+  props: {
+    message: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
     }

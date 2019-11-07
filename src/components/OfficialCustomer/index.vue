@@ -4,12 +4,12 @@
       <img src="../../assets/InquiryImg/img_default_avatar.png" alt="" />
     </div>
     <div class="title">官方客服</div>
-    <div class="message">
+    <div class="message" @click="jumpMessage">
       <img src="../../assets/InquiryImg/ic_message.png" alt="" />
     </div>
-    <div class="phone">
+    <a href="tel:4001680458" class="phone">
       <img src="../../assets/InquiryImg/ic_firm_call.png" alt="" />
-    </div>
+    </a>
   </div>
 </template>
 <script>
@@ -17,6 +17,17 @@ export default {
   data() {
     return {
 
+    }
+  },
+  created() {
+
+  },
+  methods: {
+    jumpMessage() {
+      ysf('open', {
+        templateId:123
+      })
+      // window.location.href="https://anniu.qiyukf.com/client?k=394edb8ea8c46b5bbe73ed39ad18c3f7&wp=1&gid=912308&robotShuntSwitch=0"
     }
   }
 }

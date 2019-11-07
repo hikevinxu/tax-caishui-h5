@@ -64,11 +64,35 @@ export default new Router({
       }
     },
     {
+      path: '/success',
+      name: 'success',
+      component: () => import('../views/addEnquiry/success.vue'),
+      meta: {
+        title: '提交成功'
+      }
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('../views/login/login.vue'),
       meta: {
         title: '登陆'
+      }
+    },
+    {
+      path: '/history',
+      name: 'history',
+      component: () => import('../views/addEnquiry/history.vue'),
+      meta: {
+        title: '历史记录'
+      }
+    },
+    {
+      path: '/aboutUs',
+      name: 'aboutUs',
+      component: () => import('../views/home/aboutUs.vue'),
+      meta: {
+        title: '关于我们'
       }
     },
     {

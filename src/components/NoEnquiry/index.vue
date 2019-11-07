@@ -3,11 +3,22 @@
     <div class="noEnquiryImg">
       <img src="@/assets/global/img_page_in_audit.png" alt="">
     </div>
-    <div class="noEnquiryMsg">当前25家商家正在报价中，请等待…</div>
+    <div v-if="page == 'history'" class="noEnquiryMsg">当前需求暂无报价</div>
+    <div v-else class="noEnquiryMsg">当前 {{num}} 家商家正在报价中，请等待…</div>
   </div>
 </template>
 <script>
 export default {
+  props: {
+    page: {
+      type: String,
+      default: ''
+    },
+    num: {
+      type: Number,
+      default: 0
+    }
+  },
   data() {
     return {
 

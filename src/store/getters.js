@@ -12,6 +12,10 @@ let getters = {
     let token = localStorage.getItem('token')
     return token
   },
+  getUserPhone: state => {
+    let userPhone = localStorage.getItem('userPhone')
+    return userPhone
+  },
   getJumpUrl: state => {
     let jumpUrl = localStorage.getItem('jumpUrl')
     return jumpUrl

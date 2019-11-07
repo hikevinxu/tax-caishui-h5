@@ -10,7 +10,7 @@
 export default {
   data () {
     return {
-      keepAlive: ['login', 'addEnquiry']
+      keepAlive: ['login']
     }
   }
 }

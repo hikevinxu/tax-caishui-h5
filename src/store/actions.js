@@ -26,6 +26,12 @@ let actions = {
       resolve()
     })
   },
+  save_user_phone (context, userPhone) {
+    return new Promise((resolve) => {
+      context.commit('update_user_phone', userPhone)
+      resolve()
+    })
+  },
   save_jumpUrl (context, jumpUrl) {
     return new Promise((resolve) => {
       context.commit('update_jumpUrl', jumpUrl)

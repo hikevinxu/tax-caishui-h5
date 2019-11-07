@@ -21,7 +21,6 @@ axios.interceptors.request.use((config) => {
     // config.data = qs.stringify(config.data)
   }
   let token = localStorage.getItem('token')
-  console.log(token)
   if (token) {
     // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
     config.headers['Authorization'] = token

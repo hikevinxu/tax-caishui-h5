@@ -1,17 +1,11 @@
 <template>
   <div class="inquiry_page">
-    <Header title="询价" />
-    <div class="customer">
-      <Official-Customer />
-    </div>
-    <div class="recordHeader">
-      <span class="recordTitle">我的询价记录</span>
-      <span class="history" @click="goHistory">历史记录</span>
-    </div>
-    <No-Demand v-if="intentionList.length == 0" />
-    <div v-else class="inquiryRecord">
+    <Header title="历史记录" :isBack="true" />
+    <Empty-List message="暂无记录" v-if="total == 0" />
+    <div class="inquiryRecord">
         <van-list
           v-model="loading"
+          :offset="50"
           :finished="finished"
           finished-text=""
           @load="onLoad"
@@ -21,11 +15,10 @@
             <span class="demandName">需求：{{item.intention}}</span>
             <span class="demandTime">{{item.lastModifyTime}}</span>
           </div>
-          <No-Enquiry :num="item.serviceIntentionList.length - item.serviceIntentionListH5.length" v-if="item.serviceIntentionListH5.length == 0" />
-          <div class="listItem" v-else v-for="(enquiryItem, enquiryIndex) in item.serviceIntentionListH5" :key="'enquiry' + enquiryIndex" >
+          <No-Enquiry v-if="item.serviceIntentionListH5.length == 0" :page="page" />
+          <div class="listItem" v-for="(enquiryItem, enquiryIndex) in item.serviceIntentionListH5" :key="'enquiry' + enquiryIndex" >
             <EnquiryListItem :enquiryData="enquiryItem"  class="listItem_inner" />
           </div>
-          <Demand-Loading :num="item.serviceIntentionList.length - item.serviceIntentionListH5.length" v-if="item.serviceIntentionListH5.length != 0" />
         </div>
       </van-list>
     </div>
@@ -33,11 +26,9 @@
 </template>
 <script>
 import Header from '@/components/Header/Header'
-import OfficialCustomer from '@/components/OfficialCustomer/index'
 import EnquiryListItem from '@/components/EnquiryListItem/index'
-import NoDemand from '@/components/NoDemand/index'
+import EmptyList from '@/components/EmptyList/EmptyList'
 import NoEnquiry from '@/components/NoEnquiry/index'
-import DemandLoading from '@/components/DemandLoading/index'
 import enquiry from '@/api/enquiry'
 import sa from 'sa-sdk-javascript'
 import Vue from 'vue'
@@ -47,35 +38,35 @@ Vue.use(List)
 export default {
   components: {
     Header,
-    OfficialCustomer,
     EnquiryListItem,
-    NoDemand,
-    NoEnquiry,
-    DemandLoading
+    EmptyList,
+    NoEnquiry
   },
   data() {
     return {
+      page: 'history',
       listQuery: {
         pageNum: 1,
         pageSize: 10
       },
       intentionList: [],
-      total: 0,
+      total: undefined,
       loading: false,
       finished: false
     }
   },
   created() {
+    // this.getList()
     sa.quick("autoTrackSinglePage",{
-      $title: '询价页',
-      $screen_name: `enquiry_page`
+      $title: '询价历史列表页',
+      $screen_name: `enquiry_history_page`
     })
-    this.getList()
   },
   methods: {
     getList() {
-      // 获取获取询价单列表-有效
-      enquiry.intentionListNow(this.listQuery).then(res => {
+      // 获取获取询价单列表-历史记录
+      this.finished = true
+      enquiry.intentionListHistory(this.listQuery).then(res => {
         if(res.code == 0){
           for(let i=0;i<res.data.items.length;i++) {
             let serviceIntentionListH5 = []
@@ -92,6 +83,8 @@ export default {
           // 数据全部加载完成
           if (this.intentionList.length >= this.total) {
             this.finished = true
+          } else {
+            this.finished = false
           }
         }
       }).catch(err => {
@@ -108,52 +101,47 @@ export default {
         // 加载状态结束
         this.loading = false
       }, 500)
-    },
-    goHistory() {
-      this.$router.push('history')
     }
   }
 }
 </script>
 <style lang="scss" scoped>
 .inquiry_page {
-  padding: 56px 0;
-  padding-bottom: 70px;
+  padding-top: 56px;
+  min-width: 100vw;
+  min-height: 100vh;
+  box-sizing: border-box;
   .customer {
     margin: 0 16px;
     margin-top: 16px;
   }
-  .recordHeader {
-    font-family: PingFangSC-Medium;
-    margin: 0 16px;
-    font-size: 16px;
-    color: rgba(0,0,0,0.87);
-    line-height: 22px;
-    text-align: left;
-    margin-top: 20px;
-    .history {
-      display: block;
-      float: right;
-      width: 58px;
-      height: 22px;
-      border: 1px solid #FFAD71;
-      border-radius: 2px;
-      font-family: PingFangSC-Regular;
-      font-size: 11px;
-      color: #FFAD71;
-      line-height: 22px;
-      text-align: center;
-    }
-  }
   .inquiryRecord {
+    margin-top: 20px;
+    .recordHeader {
+      font-family: PingFangSC-Medium;
+      margin: 0 16px;
+      font-size: 16px;
+      color: rgba(0,0,0,0.87);
+      line-height: 22px;
+      text-align: left;
+      .history {
+        display: block;
+        float: right;
+        width: 58px;
+        height: 22px;
+        border: 1px solid #FFAD71;
+        border-radius: 2px;
+        font-family: PingFangSC-Regular;
+        font-size: 11px;
+        color: #FFAD71;
+        line-height: 22px;
+        text-align: center;
+      }
+    }
     .recordList {
-      padding-bottom: 20px;
       .demand {
         margin: 0 16px;
-        margin-top: 12px;
         overflow: hidden;
-        padding-top: 11px;
-        border-top: 1px solid rgba(0,0,0,0.04);
         .demandName {
           float: left;
           font-family: PingFangSC-Medium;
@@ -172,7 +160,7 @@ export default {
           border-bottom: 1px solid rgba(0,0,0,0.04);
         }
       }
-      .listItem:nth-last-child(2) {
+      .listItem:nth-last-child(1) {
         .listItem_inner {
           border-bottom: 0;
         }

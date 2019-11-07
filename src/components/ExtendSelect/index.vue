@@ -2,23 +2,10 @@
   <div class="areaSelect">
     <div class="areaSelect_header">
       <div class="areaSelect_title">请选择</div>
-      <div class="areaSelect_step">
-        <div class="areaSelect_step_line">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="areaSelect_step_name">
-          <div class="province">{{areaSelectData.parentName}}</div>
-          <div class="city">{{areaSelectData.name}}</div>
-          <div class="area">请选择区/县</div>
-        </div>
-      </div>
     </div>
-    <div class="areaSelect_body_title">选择区/县</div>
     <div class="areaSelect_body">
       <ul class="areaList">
-        <li v-for="(area, index) in areaSelectData.childs" :key="'area' + index" @click="selectArea(area)">{{area.name}}</li>
+        <li v-for="(item, index) in currentData" :key="index" :class="activeData == item.name ? 'active' : ''" @click="selectArea(item)">{{item.name}}</li>
       </ul>
     </div>
   </div>
@@ -26,10 +13,14 @@
 <script>
 
 export default {
-  props: {  
-    areaSelectData: {
-      type: Object,
-      default: {}
+  props: {
+    currentData: {
+      type: Array,
+      default: []
+    },
+    activeData: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -38,10 +29,8 @@ export default {
     }
   },
   methods: {
-    selectArea(area) {
-      area.provinceName = this.areaSelectData.parentName
-      area.cityName = this.areaSelectData.name
-      this.$emit('areaSelect', area)
+    selectArea(item) {
+      this.$emit('select', item)
     }
   }
 }
@@ -58,7 +47,7 @@ export default {
     background-color: #fff;
     .areaSelect_title {
       text-align: center;
-      padding-top: 20px;
+      padding: 15px 0;
       font-family: PingFangSC-Regular;
       font-size: 14px;
       color: rgba(0,0,0,0.87);
@@ -126,14 +115,17 @@ export default {
     overflow: scroll;
     .areaList {
       padding: 0;
-      margin: 0 16px;
       margin-bottom: 8px;
       li {
         font-family: PingFangSC-Regular;
         font-size: 14px;
         color: rgba(0,0,0,0.60);
         text-align: left;
-        padding: 8px 0;
+        padding: 8px 16px;
+      }
+      li.active {
+        background-color: #fff;
+        color: #FF7F4A;
       }
     }
   }

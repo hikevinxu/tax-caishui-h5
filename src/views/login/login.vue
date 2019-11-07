@@ -174,7 +174,7 @@ export default {
         if (res.code === 0) {
           // sa.login(res.data.uid)
           Toast('登录成功')
-          
+          this.$store.dispatch('save_user_phone', this.userName)
           this.$store.dispatch('save_token', res.data.accessToken)
           this.$router.push('home')
           // if (localStorage.getItem('jumpUrl')) {
