@@ -38,7 +38,7 @@ export default {
       page: 'history',
       listQuery: {
         pageNum: 1,
-        pageSize: 10
+        pageSize: 5
       },
       intentionList: [],
       total: undefined,
