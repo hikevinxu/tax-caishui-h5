@@ -4,7 +4,7 @@
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <div class="banner">
         <van-swipe :autoplay="3000" indicator-color="#FF7F4A">
-          <van-swipe-item v-for="(image, index) in bannerImg" :key="index" @click="jumpAdert">
+          <van-swipe-item v-for="(image, index) in bannerImg" :key="index" @click="jumpAdert(image, index)">
             <img v-lazy="image.elementValue" />
           </van-swipe-item>
         </van-swipe>
@@ -40,7 +40,8 @@ export default {
     return {
       isLoading: false,
       serviceTypeList: [],
-      bannerImg: []
+      bannerImg: [],
+      adPosition: {}
     }
   },
   created() {
@@ -70,6 +71,7 @@ export default {
         if(res.code == 0) {
           console.log(res)
           this.bannerImg = res.data.infos
+          this.adPosition = res.data.position
           this.isLoading = false
         }
       })
@@ -92,8 +94,16 @@ export default {
         }
       })
     },
-    jumpAdert() {
-
+    jumpAdert(item, index) {
+      if (item.goType == 1) {
+        sa.quick("WebAdvertClick",{
+          code: item.positionNo,
+          name: item.positionName,
+          index: index,
+          subject: item.elementValue
+        })
+        window.location.href = item.adValue
+      }
     }
   }
 }

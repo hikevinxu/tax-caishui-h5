@@ -2,7 +2,7 @@
   <div class="demandLoading">
     <div class="demandLoading_inner">
       <div class="time"><img src="@/assets/global/img_page_in_audit.png" alt=""></div>
-      <div class="msg">当前还剩25家商家正在报价中，请耐心等待…</div>
+      <div class="msg">当前还剩 {{num}} 家商家正在报价中，请耐心等待…</div>
     </div>
   </div>
 </template>

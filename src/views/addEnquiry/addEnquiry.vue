@@ -267,6 +267,10 @@ export default {
       }
       enquiryApi.intentionCreate(params).then(res => {
         if(res.code == 0) {
+          sa.quick("WebUserEnquiryClick",{
+            code: this.$route.query.code,
+            name: this.$route.query.name
+          })
           Toast('询价已发送成功，等待商家与您联系！')
           this.$router.push('/success?name=' + this.$route.query.name)
         }
