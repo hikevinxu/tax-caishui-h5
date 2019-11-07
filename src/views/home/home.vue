@@ -65,7 +65,7 @@ export default {
         }
       })
       let params = {
-        positionNo: '001'
+        positionNo: '010'
       }
       globalApi.advertPositionList(params).then(res => {
         if(res.code == 0) {
