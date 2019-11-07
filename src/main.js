@@ -45,7 +45,7 @@ sa.init({
   // debug_mode: true,
   // 配置打通 App 与 H5 的参数
   use_app_track: true,
-  is_track_single_page: false,
+  is_track_single_page: true,
   heatmap: {
     // 是否开启点击图，默认 default 表示开启，自动采集 $WebClick 事件，可以设置 'not_collect' 表示关闭
     clickmap: 'not_collect',
