@@ -78,6 +78,7 @@ export default {
             // 数据全部加载完成
             if (this.intentionList.length >= this.total) {
               this.finished = true
+              this.over = true
             } else {
               this.finished = false
             }
