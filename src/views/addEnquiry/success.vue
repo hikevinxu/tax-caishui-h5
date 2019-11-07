@@ -5,16 +5,12 @@
     <span class="back" @click="back">
       <img src="@/assets/global/ic_arrow_back.png" alt="">
     </span>
-    提交成功
+    {{title}}
   </div>
     <div class="customer">
       <Official-Customer />
     </div>
     <div class="loading">
-      <div class="demand">
-        <span class="demandName">需求：公司注册</span>
-        <span class="demandTime">19-08-24 24:00:00</span>
-      </div>
       <div class="noEnquiry">
         <div class="noEnquiryImg">
           <img src="@/assets/global/img_page_in_audit.png" alt="">
@@ -36,7 +32,7 @@ export default {
   },
   data() {
     return {
-
+      title: this.$route.query.name
     }
   },
   created() {
