@@ -279,6 +279,7 @@ export default {
     flex: 1;
     overflow: scroll;
     position: relative;
+    background: #FAFAFA;
   }
   .searchBar {
     margin: 0 16px;
