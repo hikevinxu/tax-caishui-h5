@@ -190,13 +190,13 @@ export default {
       height: 16px;
       position: absolute;
       top: 50%;
-      right: 54px;
+      right: 60px;
       transform: translate(0, -50%);
       background-color: rgba(0,0,0,0.04);
     }
     .status {
       box-sizing: border-box;
-      width: 54px;
+      width: 60px;
       padding-left: 15px;
       margin: auto 0;
       text-align: center;

@@ -78,7 +78,7 @@ export default {
             for(let i=0;i<res.data.items.length;i++) {
               let serviceIntentionListH5 = []
               for(let j=0;j<res.data.items[i].serviceIntentionList.length;j++) {
-                if (res.data.items[i].serviceIntentionList[j].quotedPrice || res.data.items[i].serviceIntentionList[j].status == 3) {
+                if (res.data.items[i].serviceIntentionList[j].intentionInfoBo.quotedPrice || res.data.items[i].serviceIntentionList[j].status == 3) {
                   serviceIntentionListH5.push(res.data.items[i].serviceIntentionList[j])
                 }
               }
