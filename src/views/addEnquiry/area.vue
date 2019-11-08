@@ -10,11 +10,13 @@
       </div>
     </div>
     <div class="body">
-      <div class="searchBar">
-        <span class="searchIcon">
-          <img src="@/assets/global/ic_search.png" alt="">
-        </span>
-        <input ref="getBlur" v-model="searchText" @input="searchChange" type="text" placeholder="请输入城市名称或首字母查询" @keyup.13="searchChange">
+      <div class="body_header">
+        <div class="searchBar">
+          <span class="searchIcon">
+            <img src="@/assets/global/ic_search.png" alt="">
+          </span>
+          <input ref="getBlur" v-model="searchText" @input="searchChange" type="text" placeholder="请输入城市名称或首字母查询" @keyup.13="searchChange">
+        </div>
       </div>
       <div class="areaList">
         <div class="hotCity" v-if="countryActive == 1">
@@ -280,6 +282,10 @@ export default {
     overflow: scroll;
     position: relative;
     background: #FAFAFA;
+    .body_header {
+      padding: 10px 0;
+      background: #fff;
+    }
   }
   .searchBar {
     margin: 0 16px;
