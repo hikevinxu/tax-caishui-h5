@@ -19,7 +19,7 @@
         <div class="listItem" v-else v-for="(enquiryItem, enquiryIndex) in item.serviceIntentionListH5" :key="'enquiry' + enquiryIndex" >
           <EnquiryListItem :enquiryData="enquiryItem"  class="listItem_inner" />
         </div>
-        <Demand-Loading :num="item.serviceIntentionList.length - item.serviceIntentionListH5.length" v-if="item.serviceIntentionListH5.length != 0" />
+        <Demand-Loading :num="item.serviceIntentionList.length - item.serviceIntentionListH5.length" v-if="item.serviceIntentionListH5.length != 0 && (item.serviceIntentionList.length - item.serviceIntentionListH5.length) > 0" />
       </div>
     </div>
   </div>
@@ -154,7 +154,7 @@ export default {
   }
   .inquiryRecord {
     .recordList {
-      padding-bottom: 20px;
+      // padding-bottom: 20px;
       .demand {
         margin: 0 16px;
         margin-top: 12px;
@@ -177,6 +177,11 @@ export default {
       .listItem {
         .listItem_inner {
           border-bottom: 1px solid rgba(0,0,0,0.04);
+        }
+      }
+      .listItem:nth-last-child(1) {
+        .listItem_inner {
+          border-bottom: 0;
         }
       }
       .listItem:nth-last-child(2) {
