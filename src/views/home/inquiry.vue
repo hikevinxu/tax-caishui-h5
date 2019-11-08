@@ -1,6 +1,6 @@
 <template>
   <div class="inquiry_page">
-    <Header title="询价" />
+    <!-- <Header title="询价" /> -->
     <div class="customer">
       <Official-Customer />
     </div>
@@ -8,7 +8,8 @@
       <span class="recordTitle">我的询价记录</span>
       <span class="history" @click="goHistory">历史记录</span>
     </div>
-    <No-Demand v-if="intentionList.length == 0" />
+    <div class="loadingList" v-if="!loadingData">正在加载中...</div>
+    <No-Demand v-if="loadingData && intentionList.length == 0" />
     <div v-else class="inquiryRecord" ref="scroll" @scroll="loadMore">
       <div class="recordList" v-for="(item, index) in intentionList" :key="'intention' + index">
         <div class="demand">
@@ -25,7 +26,7 @@
   </div>
 </template>
 <script>
-import Header from '@/components/Header/Header'
+// import Header from '@/components/Header/Header'
 import OfficialCustomer from '@/components/OfficialCustomer/index'
 import EnquiryListItem from '@/components/EnquiryListItem/index'
 import NoDemand from '@/components/NoDemand/index'
@@ -39,7 +40,6 @@ import { List } from 'vant'
 Vue.use(List)
 export default {
   components: {
-    Header,
     OfficialCustomer,
     EnquiryListItem,
     NoDemand,
@@ -57,7 +57,8 @@ export default {
       loading: false,
       finished: false,
       over: false,
-      timer: undefined
+      timer: undefined,
+      loadingData: false
     }
   },
   created() {
@@ -74,6 +75,7 @@ export default {
       this.finished = true
       enquiry.intentionListNow(this.listQuery).then(res => {
         if(res.code == 0){
+          this.loadingData = true
           if(res.data.items.length > 0){
             for(let i=0;i<res.data.items.length;i++) {
               let serviceIntentionListH5 = []
@@ -125,6 +127,7 @@ export default {
 <style lang="scss" scoped>
 .inquiry_page {
   padding: 56px 0;
+  padding-top: 10px;
   padding-bottom: 70px;
   .customer {
     margin: 0 16px;
@@ -151,6 +154,13 @@ export default {
       line-height: 22px;
       text-align: center;
     }
+  }
+  .loadingList {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: rgba(0,0,0,0.60);
+    padding-bottom: 30px;
+    padding-top: 50px;
   }
   .inquiryRecord {
     .recordList {

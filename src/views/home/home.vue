@@ -1,6 +1,6 @@
 <template>
   <div class="home_page">
-    <Header title="所有服务" />
+    <!-- <Header title="所有服务" /> -->
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <div class="banner" v-if="bannerImg.length > 0">
         <van-swipe :autoplay="3000" indicator-color="#FF7F4A">
@@ -25,7 +25,7 @@
 </template>
 <script>
 
-import Header from '@/components/Header/Header'
+// import Header from '@/components/Header/Header'
 import Vue from 'vue'
 import { PullRefresh, Skeleton, Swipe, SwipeItem, Lazyload, Row, Col } from 'vant'
 Vue.use(PullRefresh).use(Skeleton).use(Swipe).use(SwipeItem).use(Lazyload, {preload: '120px'}).use(Row).use(Col)
@@ -33,9 +33,9 @@ import globalApi from '@/api/globalApi'
 import enquiryApi from '@/api/enquiry'
 import sa from 'sa-sdk-javascript'
 export default {
-  components: {
-    Header
-  },
+  // components: {
+  //   Header
+  // },
   data() {
     return {
       isLoading: false,
@@ -111,6 +111,7 @@ export default {
 <style lang="scss" scoped>
 .home_page {
   padding: 56px 0;
+  padding-top: 10px;
   .banner {
     margin: 0 16px;
     height: 120px;

@@ -4,17 +4,17 @@
       <span class="back" @click="back">
         <img src="@/assets/global/ic_arrow_back.png" alt="">
       </span>
-      <div class="tabs">
+      <!-- <div class="tabs">
         <div :class="countryActive == 1 ? 'tab active' : 'tab'" @click="changeCountry(1)">国内</div>
         <div :class="countryActive == 2 ? 'tab active' : 'tab'" @click="changeCountry(2)">海外</div>
-      </div>
+      </div> -->
     </div>
     <div class="body">
       <div class="searchBar">
         <span class="searchIcon">
           <img src="@/assets/global/ic_search.png" alt="">
         </span>
-        <input v-model="searchText" @input="searchChange" type="text" placeholder="请输入城市名称或首字母查询">
+        <input ref="getBlur" v-model="searchText" @input="searchChange" type="text" placeholder="请输入城市名称或首字母查询" @keyup.13="searchChange">
       </div>
       <div class="areaList">
         <div class="hotCity" v-if="countryActive == 1">
@@ -76,6 +76,12 @@ export default {
   created() {
     this.getAddressHotCitys()
     this.getAddressTrees()
+    document.onkeydown = (e) => {
+      let key = window.event.keyCode
+      if (key == 13) {
+        this.$refs.getBlur.blur()
+      }
+    }
   },
   methods: {
     back(){
@@ -181,7 +187,7 @@ export default {
       if (engReg.test(this.searchText.substring(0, 1))) {
         let arr = []
         for(let i=0;i<this.searchList.length;i++) {
-          if(this.searchText.substring(0, 1) == this.searchList[i].firstPinYin) {
+          if(this.searchText.substring(0, 1).toLocaleUpperCase() == this.searchList[i].firstPinYin) {
             arr.push(this.searchList[i])
           }
         }

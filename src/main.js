@@ -22,21 +22,20 @@ if (process.env.VUE_APP_DEPLOY == "prod") {
   server_url = config.SC_server_sit_url
 }
 
-router.beforeEach((to, from, next) => {
-  // if (to.name === 'login' && from.path !== '/' && from.name !== 'login' && from.name !== 'powerOfAttoney') {
-  //   let jumpUrl = {
-  //     path: from.path,
-  //     query: from.query
-  //   }
-  //   let jumpUrlString = JSON.stringify(jumpUrl)
-  //   store.dispatch('save_jumpUrl', jumpUrlString)
-  // }
-  /* 路由发生变化修改页面title */
-  if (to.meta.title) {
-    document.title = to.meta.title
-  }
-  next()
-})
+// router.beforeEach((to, from, next) => {
+//   /* 路由发生变化修改页面title */
+//   if (to.meta.title) {
+//     document.title = to.meta.title
+//   }
+// //   if (to.name === 'login' && from.name !== 'powerOfAttoney') {
+// //     next({
+// //       path: '/home'
+// //     })
+// //   } else {
+// //     next()
+// //   }
+// next()
+// })
 
 sa.init({
   // 正式地址：
@@ -55,8 +54,10 @@ sa.init({
   }
 })
 
-// window.addEventListener("popstate", function(e) {
-//   alert("我监听到了浏览器的返回按钮事件啦");//根据自己的需求实现自己的功能
+// window.addEventListener("popstate", (e) => {
+//   if (e.currentTarget.location.pathname == '/login') {
+//     router.push('/home')
+//   }
 // }, false)
 
 new Vue({
