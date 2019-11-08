@@ -4,7 +4,7 @@
       <img src="@/assets/global/img_page_in_audit.png" alt="">
     </div>
     <div v-if="page == 'history'" class="noEnquiryMsg">当前需求暂无报价</div>
-    <div v-else class="noEnquiryMsg">当前 {{num}} 家商家正在报价中，请等待…</div>
+    <div v-else class="noEnquiryMsg">{{ num > 0 ? '当前 ' + num + ' 家商家正在报价中，请等待…' : '商家正在报价中，请稍候...'}}</div>
   </div>
 </template>
 <script>
@@ -28,8 +28,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .noEnquiry {
-  margin-top: 48px;
-  margin-bottom: 70px;
+  margin-top: 20px;
+  margin-bottom: 40px;
   .noEnquiryImg {
     margin: 0 auto;
     width: 80px;
