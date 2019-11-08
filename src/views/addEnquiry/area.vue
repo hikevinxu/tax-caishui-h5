@@ -4,10 +4,10 @@
       <span class="back" @click="back">
         <img src="@/assets/global/ic_arrow_back.png" alt="">
       </span>
-      <!-- <div class="tabs">
+      <div class="tabs">
         <div :class="countryActive == 1 ? 'tab active' : 'tab'" @click="changeCountry(1)">国内</div>
         <div :class="countryActive == 2 ? 'tab active' : 'tab'" @click="changeCountry(2)">海外</div>
-      </div> -->
+      </div>
     </div>
     <div class="body">
       <div class="searchBar">
@@ -114,10 +114,10 @@ export default {
     },
     // 把城市列表转成indexBar数据格式
     getCityListBySearchList(searchList) {
+      console.log(searchList)
       let citySP = []
       let citySPList = []
       for(var i=0;i<26;i++){
-        citySP.push(String.fromCharCode(65+i))
         let obj = {
           indexBar: String.fromCharCode(65+i),
           childs: []
@@ -127,7 +127,10 @@ export default {
             obj.childs.push(searchList[j])
           }
         }
-        citySPList.push(obj)
+        if (obj.childs.length > 0) {
+          citySPList.push(obj)
+          citySP.push(String.fromCharCode(65+i))
+        }
       }
       this.indexList = citySP
       this.cityList = citySPList

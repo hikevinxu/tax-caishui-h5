@@ -145,6 +145,8 @@ export default {
       .demand {
         margin: 0 16px;
         overflow: hidden;
+        padding-top: 11px;
+        border-top: 1px solid rgba(0,0,0,0.04);
         .demandName {
           float: left;
           font-family: PingFangSC-Medium;

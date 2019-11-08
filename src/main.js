@@ -27,14 +27,13 @@ if (process.env.VUE_APP_DEPLOY == "prod") {
 //   if (to.meta.title) {
 //     document.title = to.meta.title
 //   }
-// //   if (to.name === 'login' && from.name !== 'powerOfAttoney') {
-// //     next({
-// //       path: '/home'
-// //     })
-// //   } else {
-// //     next()
-// //   }
-// next()
+//   if (to.name === 'login' && from.name !== 'powerOfAttoney') {
+//     next({
+//       path: '/home'
+//     })
+//   } else {
+//     next()
+//   }
 // })
 
 sa.init({
