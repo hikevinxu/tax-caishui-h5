@@ -111,8 +111,8 @@ export default {
 <style lang="scss" scoped>
 .inquiry_page {
   padding-top: 56px;
-  min-width: 100vw;
-  min-height: 100vh;
+  // min-width: 100vw;
+  // min-height: 100vh;
   box-sizing: border-box;
   .customer {
     margin: 0 16px;

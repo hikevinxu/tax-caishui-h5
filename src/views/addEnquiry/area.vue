@@ -159,7 +159,7 @@ export default {
     },
     selectCityChange(val) {
       console.log(val)
-      val.name = val.provinceName + '-' + val.cityName + '-' + val.name
+      val.area = val.provinceName + '-' + val.cityName + '-' + val.name
       // eventManager.returnEvent('selectArea', val)
       this.$emit('selectCityChange', val)
       this.areaShow = false

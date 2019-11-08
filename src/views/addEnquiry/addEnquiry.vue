@@ -280,7 +280,7 @@ export default {
       this.areaSelectShow = false
     },
     selectCityChange(data) {
-      this.area = data.name
+      this.area = data.area
       this.areaCode = data.code
       this.areaSelectShow = false
     }
