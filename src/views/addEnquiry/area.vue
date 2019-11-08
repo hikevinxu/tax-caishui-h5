@@ -114,7 +114,6 @@ export default {
     },
     // 把城市列表转成indexBar数据格式
     getCityListBySearchList(searchList) {
-      console.log(searchList)
       let citySP = []
       let citySPList = []
       for(var i=0;i<26;i++){
