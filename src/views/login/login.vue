@@ -140,7 +140,8 @@ export default {
         return
       }
       this.verifyType = verifyType
-      this.captchaIns && this.captchaIns.verify()
+      this.nextShow = false
+      // this.captchaIns && this.captchaIns.verify()
     },
     // 打开协议书
     jumpXY (id) {
