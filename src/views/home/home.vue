@@ -67,7 +67,7 @@ export default {
       let params = {
         positionNo: '010'
       }
-      globalApi.advertPositionList(params).then(res => {
+      globalApi.bannerPositionList(params).then(res => {
         if(res.code == 0) {
           console.log(res)
           this.bannerImg = res.data.infos

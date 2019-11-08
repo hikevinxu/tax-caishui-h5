@@ -15,8 +15,8 @@ export default {
    * @function advertPositionList
    * @type 'Get'
    */
-  advertPositionList (params) {
-    return fetchGet('/advert/position/list', params)
+  bannerPositionList (params) {
+    return fetchGet('/banner/position/list', params)
   },
   /**
    * 发送登录验证码

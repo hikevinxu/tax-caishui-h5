@@ -139,6 +139,7 @@ export default {
               searchList.push(overseaCityTree[i])
             }
           }
+          this.searchList = searchList
           this.getCityListBySearchList(searchList)
         }
       })

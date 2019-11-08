@@ -133,7 +133,7 @@ export default {
         font-size: 14px;
         color: rgba(0,0,0,0.60);
         text-align: left;
-        padding: 8px 0;
+        padding: 10px 0;
       }
     }
   }

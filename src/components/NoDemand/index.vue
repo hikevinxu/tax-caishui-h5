@@ -3,7 +3,7 @@
     <div class="nothingImg">
       <img src="@/assets/global/ic_nothing.png" alt="">
     </div>
-    <div class="nothingNotice">当前暂无报价需求</div>
+    <!-- <div class="nothingNotice">当前暂无报价需求</div> -->
     <div class="freeEnquiryBtn">
       <van-button type="primary" size="large" @click="freeEnquiry">免 费 询 价</van-button>
     </div>

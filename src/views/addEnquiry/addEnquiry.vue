@@ -106,6 +106,14 @@ export default {
       $screen_name: `enquiry_form_generate_page`
     })
     this.init()
+    // 微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
+    window.addEventListener('resize', function () {
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+        window.setTimeout(function () {
+          document.activeElement.scrollIntoViewIfNeeded()
+        }, 0)
+      }
+    })
   },
   methods: {
     // 初始化
@@ -148,14 +156,12 @@ export default {
                   }
                 }
                 if (extra && extra != '') {
-                  console.log(1)
                   let arr = JSON.parse(extra)
                   for(let i=0;i<arr.length;i++){
                     for(let j=0; j<this.inputList.length;j++){
                       if(arr[i].propCode == this.inputList[j].code){
                         this.inputList[j].value = arr[i].valueName
                         this.inputList[j].valueCode = arr[i].valueCode
-                        console.log(123)
                       }
                     }
                   }
@@ -209,10 +215,6 @@ export default {
     },
     // 添加询价单
     addEnquiry() {
-      console.log(this.inputList)
-      console.log(this.name)
-      console.log(this.phone)
-      console.log(this.remark)
       if(!this.area || this.area == '') {
         Toast.fail('需求地区不能为空')
         return
@@ -225,11 +227,7 @@ export default {
         Toast.fail('联系方式不能为空')
         return
       }
-      if(!this.remark || this.remark == '') {
-        Toast.fail('备注不能为空')
-        return
-      }
-      // extra 字段 数据处理
+
       let arr = []
       if (this.inputList && this.inputList.length > 0) {
         for(let i=0;i<this.inputList.length;i++) {
@@ -254,7 +252,6 @@ export default {
           }
         }
       }
-      console.log(arr)
 
       let params = {
         area: this.area,
