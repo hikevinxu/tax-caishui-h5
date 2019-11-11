@@ -24,9 +24,7 @@ export default {
   },
   methods: {
     jumpMessage() {
-      ysf('open', {
-        templateId:123
-      })
+      window.location.href = ysf('url')
       // window.location.href="https://anniu.qiyukf.com/client?k=394edb8ea8c46b5bbe73ed39ad18c3f7&wp=1&gid=912308&robotShuntSwitch=0"
     }
   }

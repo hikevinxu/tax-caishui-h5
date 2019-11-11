@@ -177,6 +177,7 @@ export default {
           Toast('登录成功')
           this.$store.dispatch('save_user_phone', this.userName)
           this.$store.dispatch('save_token', res.data.accessToken)
+          window.history.replaceState(null, null, "/home")
           this.$router.push('home')
           // if (localStorage.getItem('jumpUrl')) {
           //   let routerPath = {
