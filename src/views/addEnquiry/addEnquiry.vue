@@ -269,6 +269,7 @@ export default {
             name: this.$route.query.name
           })
           Toast('询价已发送成功，等待商家与您联系！')
+          window.history.replaceState(null, null, "/home")
           this.$router.push('/success?name=' + this.$route.query.name)
         }
       })
