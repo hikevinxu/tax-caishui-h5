@@ -362,7 +362,7 @@ export default {
   }
   .submitBtn {
     margin-top: 32px;
-    margin-bottom: 80px;
+    padding-bottom: 80px;
     p {
       font-family: PingFangSC-Regular;
       font-size: 12px;
