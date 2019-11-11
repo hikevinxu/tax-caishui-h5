@@ -168,6 +168,9 @@ export default {
             text-align: center;
             line-height: 18px;
             margin-top: 4px;
+            overflow: hidden;/*超出部分隐藏*/
+            text-overflow: ellipsis;/* 超出部分显示省略号 */
+            white-space: nowrap;/*规定段落中的文本不进行换行 */
           }
         }
       }
