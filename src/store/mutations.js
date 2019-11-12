@@ -19,10 +19,15 @@ let mutations = {
     console.log(userPhone)
     localStorage.setItem('userPhone', userPhone)
   },
-  update_channel(state, channel) {
-    state.channel = channel
-    console.log(channel)
-    localStorage.setItem('channel', channel)
+  update_utm_source(state, utm_source) {
+    state.utm_source = utm_source
+    console.log(utm_source)
+    localStorage.setItem('utmSource', utm_source)
+  },
+  update_utm_medium(state, utm_medium) {
+    state.utm_medium = utm_medium
+    console.log(utm_medium)
+    localStorage.setItem('utmMedium', utm_medium)
   },
   update_jumpUrl(state, jumpUrl) {
     state.jumpUrl = jumpUrl

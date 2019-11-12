@@ -34,7 +34,9 @@ export default {
   created() {
     sa.quick("autoTrackSinglePage",{
       $title: '关于页',
-      $screen_name: `my_about_page`
+      $screen_name: `my_about_page`,
+      utm_source: this.$store.getters.getUtmSource,
+      utm_medium: this.$store.getters.getUtmMedium
     })
   },
   methods: {

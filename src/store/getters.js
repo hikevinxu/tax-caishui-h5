@@ -16,9 +16,13 @@ let getters = {
     let userPhone = localStorage.getItem('userPhone')
     return userPhone
   },
-  getChannel: state => {
-    let channel = localStorage.getItem('channel')
-    return channel
+  getUtmSource: state => {
+    let utmSource = localStorage.getItem('utmSource')
+    return utmSource
+  },
+  getUtmMedium: state => {
+    let utmMedium = localStorage.getItem('utmMedium')
+    return utmMedium
   },
   getJumpUrl: state => {
     let jumpUrl = localStorage.getItem('jumpUrl')

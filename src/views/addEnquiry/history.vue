@@ -52,7 +52,9 @@ export default {
     this.getList()
     sa.quick("autoTrackSinglePage",{
       $title: '询价历史列表页',
-      $screen_name: `enquiry_history_page`
+      $screen_name: `enquiry_history_page`,
+      utm_source: this.$store.getters.getUtmSource,
+      utm_medium: this.$store.getters.getUtmMedium
     })
     window.addEventListener('scroll',this.loadMore)
   },

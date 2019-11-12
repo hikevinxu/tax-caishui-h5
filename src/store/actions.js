@@ -32,9 +32,15 @@ let actions = {
       resolve()
     })
   },
-  save_channel (context, channel) {
+  save_utm_source (context, utm_source) {
     return new Promise((resolve) => {
-      context.commit('update_channel', channel)
+      context.commit('update_utm_source', utm_source)
+      resolve()
+    })
+  },
+  save_utm_medium (context, utm_medium) {
+    return new Promise((resolve) => {
+      context.commit('update_utm_medium', utm_medium)
       resolve()
     })
   },

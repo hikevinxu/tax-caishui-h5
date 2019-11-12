@@ -103,7 +103,9 @@ export default {
   created() {
     sa.quick("autoTrackSinglePage",{
       $title: '询价表单生成页',
-      $screen_name: `enquiry_form_generate_page`
+      $screen_name: `enquiry_form_generate_page`,
+      utm_source: this.$store.getters.getUtmSource,
+      utm_medium: this.$store.getters.getUtmMedium
     })
     this.init()
     // 微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
@@ -266,7 +268,9 @@ export default {
         if(res.code == 0) {
           sa.track("WebUserEnquiryClick",{
             code: this.$route.query.code,
-            name: this.$route.query.name
+            name: this.$route.query.name,
+            utm_source: this.$store.getters.getUtmSource,
+            utm_medium: this.$store.getters.getUtmMedium
           })
           Toast('询价已发送成功，等待商家与您联系！')
           window.history.replaceState(null, null, "/home")

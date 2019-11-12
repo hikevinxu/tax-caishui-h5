@@ -45,11 +45,13 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('save_channel', this.$route.query.channel)
-    console.log(this.$store.getters.getChannel)
+    console.log(this.$store.getters.getUtmSource)
+    console.log(this.$store.getters.getUtmMedium)
     sa.quick("autoTrackSinglePage",{
       $title: '分类页',
-      $screen_name: `category_page`
+      $screen_name: `category_page`,
+      utm_source: this.$store.getters.getUtmSource,
+      utm_medium: this.$store.getters.getUtmMedium
     })
     this.init()
   },
@@ -86,7 +88,9 @@ export default {
         if(res.code == 0){
           sa.track("WebServiceClick",{
             code: item.code,
-            name: item.name
+            name: item.name,
+            utm_source: this.$store.getters.getUtmSource,
+            utm_medium: this.$store.getters.getUtmMedium
           })
           if (res.data) {
             this.$router.push('addEnquiry?code=' + item.code + '&name=' + item.name)
@@ -102,7 +106,9 @@ export default {
           code: item.positionNo,
           name: item.positionName,
           index: index,
-          subject: item.elementValue
+          subject: item.elementValue,
+          utm_source: this.$store.getters.getUtmSource,
+          utm_medium: this.$store.getters.getUtmMedium
         })
         window.location.href = item.adValue
       }

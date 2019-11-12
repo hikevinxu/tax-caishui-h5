@@ -41,7 +41,7 @@ import Vue from 'vue'
 import { Toast, Checkbox, Button } from 'vant'
 import { Terminal, config } from '@/utils/global'
 import globalApi from '@/api/globalApi'
-// import sa from 'sa-sdk-javascript'
+import sa from 'sa-sdk-javascript'
 Vue.use(Checkbox).use(Button)
 
 export default {
@@ -173,7 +173,15 @@ export default {
       }
       globalApi.loginVerifycode(params).then(res => {
         if (res.code === 0) {
-          // sa.login(res.data.uid)
+          if(res.data.authInfo.newRegistration && res.data.authInfo.newRegistration == true){
+            sa.track('WebSignUp', {
+              target: this.$store.getters.getUtmSource,
+              utm_source: this.$store.getters.getUtmSource,
+              utm_medium: this.$store.getters.getUtmMedium,
+              phone: this.userName
+            })
+            sa.login(res.data.uid)
+          }
           Toast('登录成功')
           this.$store.dispatch('save_user_phone', this.userName)
           this.$store.dispatch('save_token', res.data.accessToken)

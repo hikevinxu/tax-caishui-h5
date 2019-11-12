@@ -7,6 +7,7 @@ import router from './router/index'
 import store from './store/index'
 import '@/common/css/reset.css'
 import '@/common/css/animate.css'
+import { getQueryString } from '@/utils/global'
 // import VConsole from 'vconsole'
 
 // import LoginBox from '@/components/LoginDialog/index'
@@ -61,6 +62,11 @@ sa.init({
 //     router.push('/home')
 //   }
 // }, false)
+
+if (getQueryString('utm_source') && getQueryString('utm_source') != '') {
+  store.dispatch('save_utm_source', getQueryString('utm_source'))
+  store.dispatch('save_utm_medium', getQueryString('utm_medium'))
+}
 
 new Vue({
   router,

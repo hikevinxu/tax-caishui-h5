@@ -1,6 +1,10 @@
 <template>
   <div class="LoginDialogComponent">
-    <van-popup v-model="isShowLoginBox">{{content}}</van-popup>
+    <van-popup v-model="isShowLoginBox">
+      <div class="loginBox">
+        {{content}}
+      </div>
+    </van-popup>
   </div>
 </template>
 <script>
@@ -41,5 +45,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
+.LoginDialogComponent {
+  .loginBox {
+    width: 296px;
+    height: 246px;
+  }
+}
 </style>

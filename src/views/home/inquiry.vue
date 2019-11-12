@@ -64,7 +64,9 @@ export default {
   created() {
     sa.quick("autoTrackSinglePage",{
       $title: '询价页',
-      $screen_name: `enquiry_page`
+      $screen_name: `enquiry_page`,
+      utm_source: this.$store.getters.getUtmSource,
+      utm_medium: this.$store.getters.getUtmMedium
     })
     window.addEventListener('scroll',this.loadMore)
     this.getList()
