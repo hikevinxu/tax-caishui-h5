@@ -16,7 +16,7 @@ LoginBox.install = function(vue, options) {
         initInstance()
       }
       if(typeof options === 'string') {
-        currentBox.content = options
+        currentBox.userName = options
       }else if(typeof options === 'object') {
         Object.assign(currentBox, options)
       }

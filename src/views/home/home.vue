@@ -50,8 +50,8 @@ export default {
     sa.quick("autoTrackSinglePage",{
       $title: '分类页',
       $screen_name: `category_page`,
-      utm_source: this.$store.getters.getUtmSource,
-      utm_medium: this.$store.getters.getUtmMedium
+      $utm_source: this.$store.getters.getUtmSource,
+      $utm_medium: this.$store.getters.getUtmMedium
     })
     this.init()
   },
@@ -89,8 +89,8 @@ export default {
           sa.track("WebServiceClick",{
             code: item.code,
             name: item.name,
-            utm_source: this.$store.getters.getUtmSource,
-            utm_medium: this.$store.getters.getUtmMedium
+            $utm_source: this.$store.getters.getUtmSource,
+            $utm_medium: this.$store.getters.getUtmMedium
           })
           if (res.data) {
             this.$router.push('addEnquiry?code=' + item.code + '&name=' + item.name)
@@ -107,8 +107,8 @@ export default {
           name: item.positionName,
           index: index,
           subject: item.elementValue,
-          utm_source: this.$store.getters.getUtmSource,
-          utm_medium: this.$store.getters.getUtmMedium
+          $utm_source: this.$store.getters.getUtmSource,
+          $utm_medium: this.$store.getters.getUtmMedium
         })
         window.location.href = item.adValue
       }

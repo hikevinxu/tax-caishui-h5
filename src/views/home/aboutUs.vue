@@ -1,6 +1,6 @@
 <template>
   <div class="aboutUs_page">
-    <Header :isBack="true" title="关于" />
+    <!-- <Header :isBack="true" title="关于" /> -->
     <div class="appLogo">
       <img src="@/assets/global/logo.png" alt="财税鱼">
     </div>
@@ -35,8 +35,8 @@ export default {
     sa.quick("autoTrackSinglePage",{
       $title: '关于页',
       $screen_name: `my_about_page`,
-      utm_source: this.$store.getters.getUtmSource,
-      utm_medium: this.$store.getters.getUtmMedium
+      $utm_source: this.$store.getters.getUtmSource,
+      $utm_medium: this.$store.getters.getUtmMedium
     })
   },
   methods: {
@@ -48,11 +48,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 .aboutUs_page {
-  padding-top: 56px;
+  // padding-top: 56px;
   min-width: 100vw;
   min-height: 100vh;
   box-sizing: border-box;
   background-color: #f5f5f5;
+  padding-top: 32px;
   .appLogo {
     width: 120px;
     height: 120px;

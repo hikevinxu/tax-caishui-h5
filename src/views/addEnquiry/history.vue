@@ -1,6 +1,6 @@
 <template>
   <div class="inquiry_page">
-    <Header title="历史记录" :isBack="true" />
+    <!-- <Header title="历史记录" :isBack="true" /> -->
     <Empty-List message="暂无记录" v-if="total == 0" />
     <div v-else class="inquiryRecord" ref="scroll" @scroll="loadMore">
       <div class="recordList" v-for="(item, index) in intentionList" :key="'intention' + index">
@@ -53,8 +53,8 @@ export default {
     sa.quick("autoTrackSinglePage",{
       $title: '询价历史列表页',
       $screen_name: `enquiry_history_page`,
-      utm_source: this.$store.getters.getUtmSource,
-      utm_medium: this.$store.getters.getUtmMedium
+      $utm_source: this.$store.getters.getUtmSource,
+      $utm_medium: this.$store.getters.getUtmMedium
     })
     window.addEventListener('scroll',this.loadMore)
   },
@@ -112,7 +112,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .inquiry_page {
-  padding-top: 56px;
+  // padding-top: 56px;
   // min-width: 100vw;
   // min-height: 100vh;
   box-sizing: border-box;

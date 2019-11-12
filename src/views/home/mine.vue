@@ -49,8 +49,8 @@ export default {
     sa.quick("autoTrackSinglePage",{
       $title: '我的',
       $screen_name: `my_page`,
-      utm_source: this.$store.getters.getUtmSource,
-      utm_medium: this.$store.getters.getUtmMedium
+      $utm_source: this.$store.getters.getUtmSource,
+      $utm_medium: this.$store.getters.getUtmMedium
     })
   },
   methods: {

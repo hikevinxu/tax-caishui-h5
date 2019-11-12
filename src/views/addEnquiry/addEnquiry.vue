@@ -1,6 +1,6 @@
 <template>
   <div class="addEnquiry_page">
-    <Header :title="pageTitle + '询价'" :isBack=true />
+    <!-- <Header :title="pageTitle + '询价'" :isBack=true /> -->
     <div class="formInfo">询价请补充需求细节，以获得精准报价</div>
     <div class="form">
       <div class="formItem" v-for="(input, index) in inputList" :key="'input' + index">
@@ -101,11 +101,12 @@ export default {
     }
   },
   created() {
+    document.title = this.$route.query.name + '询价'
     sa.quick("autoTrackSinglePage",{
       $title: '询价表单生成页',
       $screen_name: `enquiry_form_generate_page`,
-      utm_source: this.$store.getters.getUtmSource,
-      utm_medium: this.$store.getters.getUtmMedium
+      $utm_source: this.$store.getters.getUtmSource,
+      $utm_medium: this.$store.getters.getUtmMedium
     })
     this.init()
     // 微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
@@ -269,8 +270,8 @@ export default {
           sa.track("WebUserEnquiryClick",{
             code: this.$route.query.code,
             name: this.$route.query.name,
-            utm_source: this.$store.getters.getUtmSource,
-            utm_medium: this.$store.getters.getUtmMedium
+            $utm_source: this.$store.getters.getUtmSource,
+            $utm_medium: this.$store.getters.getUtmMedium
           })
           Toast('询价已发送成功，等待商家与您联系！')
           window.history.replaceState(null, null, "/home")
@@ -291,7 +292,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .addEnquiry_page {
-  padding-top: 56px;
+  // padding-top: 56px;
   .formInfo {
     height: 44px;
     background: #FAFAFA;

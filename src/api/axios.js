@@ -42,11 +42,21 @@ axios.interceptors.response.use((res) => {
     let info = '系统异常'
     switch (res.data.code) {
       case 10000:
-        router.push('/login')
+        if (store.getters.getUserPhone && store.getters.getUserPhone != '') {
+          Vue.prototype.$loginBox.showLoginBox(store.getters.getUserPhone)
+        } else {
+          Vue.prototype.$loginBox.showLoginBox()
+        }
+        // router.push('/login')
         info = '您登录信息已过期'
         break;
       case 10001:
-        router.push('/login')
+        if (store.getters.getUserPhone && store.getters.getUserPhone != '') {
+          Vue.prototype.$loginBox.showLoginBox(store.getters.getUserPhone)
+        } else {
+          Vue.prototype.$loginBox.showLoginBox()
+        }
+        // router.push('/login')
         info = '您登录信息已过期'
         break;
       case 11000:
@@ -55,7 +65,12 @@ axios.interceptors.response.use((res) => {
     if (res.data.msg) {
       info = res.data.msg
     }
-    Toast(info)
+    if (res.data.code == 10000) {
+      info =  ''
+    }
+    if (info && info != '') {
+      Toast(info)
+    }
     return Promise.reject(res)
   }
   return Promise.resolve(res)

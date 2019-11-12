@@ -10,8 +10,8 @@ import '@/common/css/animate.css'
 import { getQueryString } from '@/utils/global'
 // import VConsole from 'vconsole'
 
-// import LoginBox from '@/components/LoginDialog/index'
-// Vue.use(LoginBox)
+import LoginBox from '@/components/LoginDialog/index'
+Vue.use(LoginBox)
 
 Vue.config.productionTip = false
 /* eslint-disable no-new */
@@ -26,19 +26,13 @@ if (process.env.VUE_APP_DEPLOY == "prod") {
   server_url = config.SC_server_sit_url
 }
 
-// router.beforeEach((to, from, next) => {
-//   /* 路由发生变化修改页面title */
-//   if (to.meta.title) {
-//     document.title = to.meta.title
-//   }
-//   if (to.name === 'login' && from.name !== 'powerOfAttoney') {
-//     next({
-//       path: '/home'
-//     })
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  /* 路由发生变化修改页面title */
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  next()
+})
 
 sa.init({
   // 正式地址：
@@ -56,12 +50,6 @@ sa.init({
     show_log: false
   }
 })
-
-// window.addEventListener("popstate", (e) => {
-//   if (e.currentTarget.location.pathname == '/login') {
-//     router.push('/home')
-//   }
-// }, false)
 
 if (getQueryString('utm_source') && getQueryString('utm_source') != '') {
   store.dispatch('save_utm_source', getQueryString('utm_source'))

@@ -1,12 +1,12 @@
 <template>
   <div class="success_page">
     <!-- <Header title="提交成功" /> -->
-    <div class="header_component">
-    <span class="back" @click="back">
-      <img src="@/assets/global/ic_arrow_back.png" alt="">
-    </span>
-    {{title}}
-  </div>
+    <!-- <div class="header_component">
+      <span class="back" @click="back">
+        <img src="@/assets/global/ic_arrow_back.png" alt="">
+      </span>
+      {{title}}
+    </div> -->
     <div class="customer">
       <Official-Customer />
     </div>
@@ -36,7 +36,7 @@ export default {
     }
   },
   created() {
-
+    document.title = this.$route.query.name
   },
   methods: {
     back() {
@@ -47,7 +47,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .success_page {
-  padding-top: 56px;
+  // padding-top: 56px;
   .header_component {
     width: 100%;
     height: 56px;
