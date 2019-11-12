@@ -16,7 +16,7 @@
         <div id="captcha"></div>
         <transition-group name="fadeInDown" enter-active-class="fadeInDown animated">
           <div class="password loginInput" v-if="!nextShow"  key="ww">
-            <input @blur="scrollTop" type="number" maxlength="11" v-model="password" placeholder="验证码">
+            <input @blur="scrollTop" type="number" maxlength="4" v-model="password" placeholder="验证码">
             <span class="getYZM font14 redColor" :style="password !== '' ? 'opacity: 1;' : 'opacity: 0.5;'" v-show="regain">{{num}}秒后重新获取</span>
             <span class="getYZM font14 redColor" :style="password !== '' ? 'opacity: 1;' : 'opacity: 0.5;'" v-show="!regain" @click="getYZM($event, 'sms')">重新获取</span>
           </div>
