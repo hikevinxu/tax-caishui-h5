@@ -45,6 +45,8 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch('save_channel', this.$route.query.channel)
+    console.log(this.$store.getters.getChannel)
     sa.quick("autoTrackSinglePage",{
       $title: '分类页',
       $screen_name: `category_page`

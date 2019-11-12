@@ -32,6 +32,12 @@ let actions = {
       resolve()
     })
   },
+  save_channel (context, channel) {
+    return new Promise((resolve) => {
+      context.commit('update_channel', channel)
+      resolve()
+    })
+  },
   save_jumpUrl (context, jumpUrl) {
     return new Promise((resolve) => {
       context.commit('update_jumpUrl', jumpUrl)

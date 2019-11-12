@@ -8,6 +8,7 @@ let state = {
   jumpUrl: '',
   token: '',
   userPhone: '',
+  channel: '',
   payInfo: ''
 }
 

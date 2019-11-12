@@ -9,6 +9,9 @@ import '@/common/css/reset.css'
 import '@/common/css/animate.css'
 // import VConsole from 'vconsole'
 
+// import LoginBox from '@/components/LoginDialog/index'
+// Vue.use(LoginBox)
+
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 // new VConsole()
