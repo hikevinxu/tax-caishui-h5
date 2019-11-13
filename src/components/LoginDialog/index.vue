@@ -193,7 +193,7 @@ export default {
           localStorage.setItem('first', '1')
           console.log(router.currentRoute)
           if (router.currentRoute.path == '/addEnquiry') {
-            alert(123)
+            // alert(123)
           } else {
             window.location.reload()
           }
