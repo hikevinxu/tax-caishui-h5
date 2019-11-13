@@ -225,6 +225,7 @@ export default {
         console.log(data)
         this.area = data.area
         this.areaCode = data.code
+        eventManager.removeEvent('selectArea')
       })
       this.$router.push('/area')
     },
