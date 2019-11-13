@@ -191,12 +191,13 @@ export default {
           this.isShowLoginBox = false
           // router.push(router.currentRoute.fullPath)
           localStorage.setItem('first', '1')
-          console.log(router.currentRoute)
-          if (router.currentRoute.path == '/addEnquiry') {
-            // alert(123)
-          } else {
-            window.location.reload()
-          }
+          window.location.reload()
+          // console.log(router.currentRoute)
+          // if (router.currentRoute.path == '/addEnquiry') {
+          //   console.log(123)
+          // } else {
+          //   window.location.reload()
+          // }
         }
       })
     },
