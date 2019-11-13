@@ -1,7 +1,8 @@
 <template>
   <div class="mine_page">
     <div class="avatar">
-      <img :src="avatar != '' ? avatar : '@/assets/global/img_default_avatar.png'" alt="">
+      <img v-if="avatar != ''" :src="avatar" alt="">
+      <img  src="../../assets/global/img_default_avatar.png" alt="">
     </div>
     <div class="logout" @click="logout">
       <img src="@/assets/global/mine_ic_logout.png" alt="">

@@ -91,6 +91,7 @@ export default {
         }
       }).catch(err => {
         this.finished = true
+        this.over = true
         console.log(err)
       })
     },

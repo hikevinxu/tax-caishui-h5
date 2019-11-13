@@ -135,7 +135,7 @@ export default {
     },
     closeLoginBox() {
       this.isShowLoginBox = false
-      router.push('/home')
+      // router.push('/home')
     },
     // 获取验证码
     getYZM: function (e, verifyType) {
