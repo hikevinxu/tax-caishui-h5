@@ -104,6 +104,7 @@ export default {
         }
       }).catch(err => {
         this.finished = true
+        this.loadingData = true
         console.log(err)
       })
     },

@@ -93,6 +93,7 @@ export default {
             $utm_medium: this.$store.getters.getUtmMedium
           })
           if (res.data) {
+            localStorage.setItem('first', 1)
             this.$router.push('addEnquiry?code=' + item.code + '&name=' + item.name)
           } else {
             this.$router.push('inquiry')

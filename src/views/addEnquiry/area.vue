@@ -1,14 +1,14 @@
 <template>
   <div class="area_page">
-    <div class="header">
+    <!-- <div class="header">
       <span class="back" @click="back">
         <img src="@/assets/global/ic_arrow_back.png" alt="">
       </span>
-      <!-- <div class="tabs">
+      <div class="tabs">
         <div :class="countryActive == 1 ? 'tab active' : 'tab'" @click="changeCountry(1)">国内</div>
         <div :class="countryActive == 2 ? 'tab active' : 'tab'" @click="changeCountry(2)">海外</div>
-      </div> -->
-    </div>
+      </div>
+    </div> -->
     <div class="body">
       <div class="body_header">
         <div class="searchBar">
@@ -171,10 +171,10 @@ export default {
     selectCityChange(val) {
       console.log(val)
       val.area = val.provinceName + '-' + val.cityName + '-' + val.name
-      // eventManager.returnEvent('selectArea', val)
-      this.$emit('selectCityChange', val)
+      eventManager.returnEvent('selectArea', val)
+      // this.$emit('selectCityChange', val)
       this.areaShow = false
-      // this.$router.back(-1)
+      this.$router.back(-1)
     },
     changeCountry(index) {
       this.countryActive = index
@@ -211,7 +211,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .area_page {
-  padding-top: 56px;
+  // padding-top: 56px;
   box-sizing: border-box;
   width: 100vw;
   height: 100vh;

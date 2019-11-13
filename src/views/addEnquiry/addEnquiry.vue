@@ -58,13 +58,13 @@
     >
       <Extent-Select :currentData="currentExtend" :activeData="activeData" @select="selectExtend" />
     </van-popup>
-    <van-popup
+    <!-- <van-popup
       v-model="areaSelectShow"
       position="bottom"
-      :style="{ height: '100%' }"
+      :style="{ height: '90%' }"
     >
       <Area @closeAreaSelect="closeAreaSelect" @selectCityChange="selectCityChange" />
-    </van-popup>
+    </van-popup> -->
   </div>
 </template>
 <script>
@@ -101,6 +101,9 @@ export default {
     }
   },
   created() {
+    this.init()
+  },
+  activated() {
     document.title = this.$route.query.name + '询价'
     sa.quick("autoTrackSinglePage",{
       $title: '询价表单生成页',
@@ -108,7 +111,10 @@ export default {
       $utm_source: this.$store.getters.getUtmSource,
       $utm_medium: this.$store.getters.getUtmMedium
     })
-    this.init()
+    if (localStorage.getItem('first') == '1') {
+      localStorage.setItem('first', '0')
+      this.init()
+    }
     // 微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
     window.addEventListener('resize', function () {
       if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
@@ -214,7 +220,13 @@ export default {
     },
     // 跳转到选择地区的页面
     jumpArea() {
-      this.areaSelectShow = true
+      // this.areaSelectShow = true
+      eventManager.addEvent('selectArea', (data) => {
+        console.log(data)
+        this.area = data.area
+        this.areaCode = data.code
+      })
+      this.$router.push('/area')
     },
     // 添加询价单
     addEnquiry() {

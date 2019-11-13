@@ -21,10 +21,18 @@ axios.interceptors.request.use((config) => {
     // config.data = qs.stringify(config.data)
   }
   let token = localStorage.getItem('token')
+  let utmSource = localStorage.getItem('utmSource')
+  let utmMedium = localStorage.getItem('utmMedium')
   if (token) {
     // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
     config.headers['Authorization'] = token
   }
+  // if (utmSource) {
+  //   config.headers['utmSource'] = utmSource
+  // }
+  // if (utmMedium) {
+  //   config.headers['utmMedium'] = utmMedium
+  // }
   // config.headers['Authorization'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjEwMDAsImx0IjoidmVyaWZ5Y29kZSIsImxkIjoiYXBwIiwiY3QiOiJhcHAiLCJydCI6IjAwMDAwIiwiaWF0IjoxNTU3ODg2NjgxLCJleHAiOjE4NTU0NDE0NDk4NzQ4MSwidHRsIjoiMTg1NTQyNTg3MTAwODAwMDAwIn0.1JPP2kN-S7O-9eYa4Y2Coso1JsUhUK47x7F_pShILCk'
   return config
 }, (error) => {
