@@ -2,7 +2,7 @@
   <div class="mine_page">
     <div class="avatar">
       <img v-if="avatar != ''" :src="avatar" alt="">
-      <img  src="../../assets/global/img_default_avatar.png" alt="">
+      <img v-else src="../../assets/global/img_default_avatar.png" alt="">
     </div>
     <div class="logout" @click="logout">
       <img src="@/assets/global/mine_ic_logout.png" alt="">
