@@ -8,11 +8,11 @@
         </div>
         <div class="loginInfoInput">
           <div class="userName">
-            <input type="phone" maxlength="11" v-model="userName" placeholder="请输入手机号码">
+            <input type="tel" maxlength="11" v-model="userName" placeholder="请输入手机号码">
           </div>
           <div class="password">
-            <input type="phone" maxlength="4" v-model="password" placeholder="验证码">
-            <span v-if="!regain" @click="getYZM($event, 'sms')">获取验证码</span>
+            <input type="tel" maxlength="4" v-model="password" placeholder="验证码">
+            <span ref="getYZMInput" v-if="!regain" @click="getYZM($event, 'sms')">获取验证码</span>
             <span v-if="regain" @click="getYZM($event, 'sms')">{{num}}秒后重新获取</span>
           </div>
           <div id="captcha"></div>
@@ -21,7 +21,7 @@
           </div>
           <div class="agreeXY" key="qq">
             <van-checkbox v-model="checked">
-              阅读并同意 <span @click.stop="jumpXieyi(1)">《财税鱼用户使用协议》</span>
+              阅读并同意 <span @click.stop="jumpXieyi(1)">《平台服务协议》</span>和<span @click.stop="jumpXieyi(2)">《隐私权政策》</span>
             </van-checkbox>
           </div>
         </div>
@@ -43,6 +43,10 @@ export default {
     userName: {
       type: String,
       default: ''
+    },
+    autoSend: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -52,14 +56,15 @@ export default {
       resolve: '',
       reject: '',
       password: '',
-      checked: false,
+      checked: true,
       regain: false,
       voiceShow: false,
       num: 60,
-      checked: false,
+      checked: true,
       captchaIns: undefined,
       verifyType: 'sms',
-      vioceGetYZM: false
+      vioceGetYZM: false,
+      timer: undefined
     }
   },
   mounted () {
@@ -98,10 +103,10 @@ export default {
                   if (res.code === 0) {
                     that.nextShow = false
                     that.regain = true
-                    var timer = setInterval(() => {
+                    that.timer = setInterval(() => {
                       that.num--
                       if (that.num <= 0) {
-                        clearInterval(timer)
+                        clearInterval(that.timer)
                         that.num = 60
                         that.regain = false
                         that.voiceShow = true
@@ -126,6 +131,14 @@ export default {
     // 弹出messageBox,并创建promise对象
     showLoginBox(){
       this.isShowLoginBox = true
+      if (this.userName == '') {
+        this.userName = localStorage.getItem('formPhone')
+      }
+      if(this.userName != '' && this.autoSend) {
+        setTimeout(() => {
+          this.$refs.getYZMInput.click()
+        }, 500)
+      }
       this.promise = new Promise((resolve, reject) => {
         this.resolve = resolve
         this.reject = reject
@@ -135,14 +148,17 @@ export default {
     },
     closeLoginBox() {
       this.isShowLoginBox = false
-      router.push('/home')
+      this.num = 60
+      this.regain = false
+      clearInterval(this.timer)
+      // router.push('/home')
     },
     // 获取验证码
     getYZM: function (e, verifyType) {
+      e.preventDefault()
       if (this.regain) {
         return
       }
-      e.preventDefault()
       if (this.userName.length !== 11) {
         Toast('请输入11位合法手机号！')
         return
@@ -186,24 +202,39 @@ export default {
           }
           sa.login(res.data.authInfo.uid)
           Toast('登录成功')
+          localStorage.setItem('formPhone', '')
           store.dispatch('save_user_phone', this.userName)
           store.dispatch('save_token', res.data.accessToken)
+          let token = localStorage.getItem('token')
           this.isShowLoginBox = false
           // router.push(router.currentRoute.fullPath)
           localStorage.setItem('first', '1')
-          window.location.reload()
-          // console.log(router.currentRoute)
-          // if (router.currentRoute.path == '/addEnquiry') {
-          //   console.log(123)
-          // } else {
-          //   window.location.reload()
-          // }
+          if (router.currentRoute.path == '/addEnquiry') {
+            this.confirm(this.userName)
+          } else {
+            window.location.reload()
+          }
         }
       })
     },
     jumpXieyi(id) {
+      localStorage.setItem('goXieyi', '1')
       router.push('/powerOfAttoney?id=' + id)
       this.isShowLoginBox = false
+    },
+    // 确定,将promise断定为resolve状态
+    confirm: function (val) {
+      this.resolve(val)
+      this.remove()
+    },
+    remove: function () {
+      setTimeout(() => {
+        this.destroy()
+      }, 300)
+    },
+    destroy: function () {
+      this.$destroy()
+      document.body.removeChild(this.$el)
     }
   }
 }

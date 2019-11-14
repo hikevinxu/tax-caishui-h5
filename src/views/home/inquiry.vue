@@ -69,7 +69,13 @@ export default {
       $utm_medium: this.$store.getters.getUtmMedium
     })
     window.addEventListener('scroll',this.loadMore)
-    this.getList()
+    let token = localStorage.getItem('token')
+    if (token && token != '') {
+      this.getList()
+    } else {
+      this.finished = true
+      this.loadingData = true
+    }
   },
   methods: {
     getList() {
@@ -106,6 +112,13 @@ export default {
         this.finished = true
         this.loadingData = true
         console.log(err)
+        if (err.data.code == 10000) {
+          if (localStorage.getItem('userPhone') && localStorage.getItem('userPhone') != '') {
+            this.$loginBox.showLoginBox(localStorage.getItem('userPhone'))
+          } else {
+            this.$loginBox.showLoginBox()
+          }
+        }
       })
     },
     loadMore(e) {

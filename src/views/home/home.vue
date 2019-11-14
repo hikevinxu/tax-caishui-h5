@@ -45,8 +45,6 @@ export default {
     }
   },
   created() {
-    console.log(this.$store.getters.getUtmSource)
-    console.log(this.$store.getters.getUtmMedium)
     sa.quick("autoTrackSinglePage",{
       $title: '分类页',
       $screen_name: `category_page`,
@@ -81,25 +79,53 @@ export default {
       })
     },
     addEnquiry(item) {
-      let params = {
-        serviceCode: item.code
-      }
-      enquiryApi.intentionCheck(params).then(res => {
-        if(res.code == 0){
-          sa.track("WebServiceClick",{
-            code: item.code,
-            name: item.name,
-            $utm_source: this.$store.getters.getUtmSource,
-            $utm_medium: this.$store.getters.getUtmMedium
-          })
-          if (res.data) {
-            localStorage.setItem('first', 1)
-            this.$router.push('addEnquiry?code=' + item.code + '&name=' + item.name)
-          } else {
-            this.$router.push('inquiry')
-          }
-        }
+      sa.track("WebServiceClick",{
+        code: item.code,
+        name: item.name,
+        $utm_source: this.$store.getters.getUtmSource,
+        $utm_medium: this.$store.getters.getUtmMedium
       })
+      localStorage.setItem('first', '1')
+      this.$router.push('addEnquiry?code=' + item.code + '&name=' + item.name)
+      // let token = localStorage.getItem('token')
+      // if (token && token != '') {
+      //   let params = {
+      //     serviceCode: item.code
+      //   }
+      //   enquiryApi.intentionCheck(params).then(res => {
+      //     if(res.code == 0){
+      //       sa.track("WebServiceClick",{
+      //         code: item.code,
+      //         name: item.name,
+      //         $utm_source: this.$store.getters.getUtmSource,
+      //         $utm_medium: this.$store.getters.getUtmMedium
+      //       })
+      //       if (res.data) {
+      //         localStorage.setItem('first', 1)
+      //         this.$router.push('addEnquiry?code=' + item.code + '&name=' + item.name)
+      //       } else {
+      //         this.$router.push('inquiry')
+      //       }
+      //     }
+      //   }).catch((err) => {
+      //     if (err.data.code == 10000) {
+      //       if (localStorage.getItem('userPhone') && localStorage.getItem('userPhone') != '') {
+      //         this.$loginBox.showLoginBox(localStorage.getItem('userPhone'))
+      //       } else {
+      //         this.$loginBox.showLoginBox()
+      //       }
+      //     }
+      //   })
+      // } else {
+      //   sa.track("WebServiceClick",{
+      //     code: item.code,
+      //     name: item.name,
+      //     $utm_source: this.$store.getters.getUtmSource,
+      //     $utm_medium: this.$store.getters.getUtmMedium
+      //   })
+      //   localStorage.setItem('first', '1')
+      //   this.$router.push('addEnquiry?code=' + item.code + '&name=' + item.name)
+      // }
     },
     jumpAdert(item, index) {
       if (item.goType == 1) {

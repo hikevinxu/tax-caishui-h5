@@ -49,7 +49,6 @@ export default {
     }
   },
   created() {
-    this.getList()
     sa.quick("autoTrackSinglePage",{
       $title: '询价历史列表页',
       $screen_name: `enquiry_history_page`,
@@ -57,6 +56,13 @@ export default {
       $utm_medium: this.$store.getters.getUtmMedium
     })
     window.addEventListener('scroll',this.loadMore)
+    let token = localStorage.getItem('token')
+    if (token && token != '') {
+      this.getList()
+    } else {
+      this.finished = true
+      this.over = true
+    }
   },
   methods: {
     getList() {
@@ -92,7 +98,13 @@ export default {
       }).catch(err => {
         this.finished = true
         this.over = true
-        console.log(err)
+        if (err.data.code == 10000) {
+          if (localStorage.getItem('userPhone') && localStorage.getItem('userPhone') != '') {
+            this.$loginBox.showLoginBox(localStorage.getItem('userPhone'))
+          } else {
+            this.$loginBox.showLoginBox()
+          }
+        }
       })
     },
     loadMore(e) {

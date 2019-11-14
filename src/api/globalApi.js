@@ -35,6 +35,14 @@ export default {
   loginVerifycode (params) {
     return fetchPost('/auth/verifycode/login', params)
   },
+   /**
+   * 个人主页信息
+   * @function authLogout
+   * @type 'Get'
+   */
+  authLogout (params) {
+    return fetchGet('/auth/logout', params)
+  },
   /**
    * 个人主页信息
    * @function userHomepageInfo

@@ -33,7 +33,7 @@
       <div class="formItem">
         <label for="">联系方式</label>
         <div class="input">
-          <input maxlength="11" v-model="phone" readonly type="tel" placeholder="请输入手机号">
+          <input maxlength="11" v-model="phone" :readonly="readOnlyPhone" type="tel" placeholder="请输入手机号">
         </div>
       </div>
       <div class="formItem textarea">
@@ -65,6 +65,7 @@
     >
       <Area @closeAreaSelect="closeAreaSelect" @selectCityChange="selectCityChange" />
     </van-popup> -->
+
   </div>
 </template>
 <script>
@@ -72,8 +73,8 @@ import Header from '@/components/Header/Header'
 import ExtentSelect from '@/components/ExtendSelect/index'
 import Area from './area'
 import Vue from 'vue'
-import { Button, ActionSheet, Picker, Popup, Toast } from 'vant'
-Vue.use(Button).use(ActionSheet).use(Picker).use(Popup).use(Toast)
+import { Button, ActionSheet, Picker, Popup, Toast, Dialog } from 'vant'
+Vue.use(Button).use(ActionSheet).use(Picker).use(Popup).use(Toast).use(Dialog)
 import enquiryApi from '@/api/enquiry'
 import { eventManager } from '@/utils/global'
 import sa from 'sa-sdk-javascript'
@@ -97,7 +98,8 @@ export default {
       phone: '',
       remark: '',
       show: false,
-      areaSelectShow: false
+      areaSelectShow: false,
+      readOnlyPhone: false
     }
   },
   created() {
@@ -114,6 +116,19 @@ export default {
     if (localStorage.getItem('first') == '1') {
       localStorage.setItem('first', '0')
       this.init()
+    }
+    if (localStorage.getItem('goXieyi') == '1') {
+      localStorage.setItem('goXieyi', '0')
+      if (localStorage.getItem('userPhone') && localStorage.getItem('userPhone') != '') {
+        this.$loginBox.showLoginBox(localStorage.getItem('userPhone')).then((val) => {
+          this.phone = val
+          this.addEnquiry()
+        })
+      } else {
+        this.$loginBox.showLoginBox({autoSend: false}).then((val) => {
+          this.addEnquiry()
+        })
+      }
     }
     // 微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
     window.addEventListener('resize', function () {
@@ -134,8 +149,41 @@ export default {
       this.remark = ''
       this.pageTitle = this.$route.query.name
       let userPhone = localStorage.getItem('userPhone')
+      if (localStorage.getItem('userPhone') && localStorage.getItem('userPhone') != '') {
+        this.readOnlyPhone = true
+      } else {
+        this.readOnlyPhone = false
+      }
       this.phone = userPhone
-      this.getIntentionInfo()
+      let token = localStorage.getItem('token')
+      if(token && token != '') {
+        this.intentionCheck()
+        this.getIntentionExtends()
+      } else {
+        this.getIntentionExtends()
+      }
+    },
+    intentionCheck() {
+      let params = {
+        serviceCode: this.$route.query.code
+      }
+      enquiryApi.intentionCheck(params).then(res => {
+        if(res.code == 0){
+          if (res.data) {
+            this.getIntentionInfo()
+          } else {
+            this.$router.push('inquiry')
+          }
+        }
+      }).catch((err) => {
+        if (err.data.code == 10000) {
+          if (localStorage.getItem('userPhone') && localStorage.getItem('userPhone') != '') {
+            this.$loginBox.showLoginBox({userName : localStorage.getItem('userPhone')})
+          } else {
+            this.$loginBox.showLoginBox()
+          }
+        }
+      })
     },
     // 获取最近一次该服务的表单配置
     getIntentionInfo() {
@@ -243,6 +291,10 @@ export default {
         Toast.fail('联系方式不能为空')
         return
       }
+      if(this.phone && this.phone.length != 11) {
+        Toast.fail('请输入11位合法手机号')
+        return
+      }
 
       let arr = []
       if (this.inputList && this.inputList.length > 0) {
@@ -269,6 +321,8 @@ export default {
         }
       }
 
+      localStorage.setItem('formPhone', this.phone)
+
       let params = {
         area: this.area,
         areaCode: this.areaCode,
@@ -289,6 +343,27 @@ export default {
           Toast('询价已发送成功，等待商家与您联系！')
           window.history.replaceState(null, null, "/home")
           this.$router.push('/success?name=' + this.$route.query.name)
+        }
+      }).catch((err) => {
+        if (err.data.code == 10000) {
+          if (localStorage.getItem('userPhone') && localStorage.getItem('userPhone') != '') {
+            this.$loginBox.showLoginBox({userName : localStorage.getItem('userPhone')}).then((val) => {
+              this.phone = val
+              this.addEnquiry()
+            })
+          } else {
+            this.$loginBox.showLoginBox({userName : this.phone, autoSend: true}).then((val) => {
+              this.addEnquiry()
+            })
+          }
+        } else if(err.data.code == 500) {
+          Dialog.alert({
+            title: '温馨提示',
+            message: '当前有询价单正在报价',
+            confirmButtonText: '点击查看'
+          }).then(() => {
+            this.$router.push('/inquiry')
+          })
         }
       })
     },

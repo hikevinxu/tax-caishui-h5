@@ -1,10 +1,16 @@
 <template>
   <div class="mine_page">
-    <div class="avatar">
+    <div class="avatar" @click.stop="login">
       <img v-if="avatar != ''" :src="avatar" alt="">
       <img v-else src="../../assets/global/img_default_avatar.png" alt="">
     </div>
-    <div class="logout" @click="logout">
+    <div v-if="token == ''" class="pleaseLogin" @click.stop="login">
+      <i>请登录</i>
+      <span>
+        <img src="@/assets/global/mine-right.png" alt="">
+      </span>
+    </div>
+    <div v-if="token && token != ''" class="logout" @click="logout">
       <img src="@/assets/global/mine_ic_logout.png" alt="">
     </div>
     <div class="name">{{name}}</div>
@@ -42,17 +48,25 @@ export default {
   data() {
     return {
       avatar: '',
-      name: ''
+      name: '',
+      token: ''
     }
   },
   created() {
-    this.init()
     sa.quick("autoTrackSinglePage",{
       $title: '我的',
       $screen_name: `my_page`,
       $utm_source: this.$store.getters.getUtmSource,
       $utm_medium: this.$store.getters.getUtmMedium
     })
+    this.token = localStorage.getItem('token')
+    let token = localStorage.getItem('token')
+    if (token && token != '') {
+      this.init()
+    } else {
+      this.finished = true
+      this.loadingData = true
+    }
   },
   methods: {
     init() {
@@ -60,6 +74,14 @@ export default {
         if(res.code == 0){
           this.avatar = res.data.avatar
           this.name = res.data.name
+        }
+      }).catch((err) => {
+        if (err.data.code == 10000) {
+          if (localStorage.getItem('userPhone') && localStorage.getItem('userPhone') != '') {
+            this.$loginBox.showLoginBox(localStorage.getItem('userPhone'))
+          } else {
+            this.$loginBox.showLoginBox()
+          }
         }
       })
     },
@@ -71,12 +93,19 @@ export default {
       Dialog.confirm({
         message: '是否注销登录？'
       }).then(() => {
-        this.$store.dispatch('save_user_phone', '')
-        this.$store.dispatch('save_token', '')
-        this.$router.push('home')
+        globalApi.authLogout().then((res) => {
+          if(res.code == 0){
+            this.$store.dispatch('save_user_phone', '')
+            this.$store.dispatch('save_token', '')
+            this.$router.push('home')
+          }
+        })
       }).catch(() => {
         
       })
+    },
+    login() {
+      this.$loginBox.showLoginBox()
     },
     aboutUs() {
       this.$router.push('aboutUs')
@@ -98,6 +127,31 @@ export default {
       display: block;
       width: 100%;
       height: 100%;
+    }
+  }
+  .pleaseLogin {
+    font-family: PingFangSC-Medium;
+    font-size: 20px;
+    color: rgba(0,0,0,0.87);
+    letter-spacing: 0;
+    position: absolute;
+    top: 22px;
+    left: 104px;
+    i {
+      float: left;
+    }
+    span {
+      display: block;
+      float: left;
+      width: 22px;
+      height: 22px;
+      position: relative;
+      top: -2px;
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
     }
   }
   .logout {
