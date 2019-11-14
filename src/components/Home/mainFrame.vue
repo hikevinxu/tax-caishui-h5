@@ -45,6 +45,21 @@ export default {
 </script>
 <style lang="scss" scoped>
 .mainFream_page {
+   @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
+    .van-tabbar--fixed {
+      bottom: 34Px;
+    }
+  }
+  @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) {
+    .van-tabbar--fixed {
+      bottom: 34Px;
+    }
+  }
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3){
+    .van-tabbar--fixed {
+      bottom: 34Px;
+    }
+  }
   .van-tabbar--fixed {
     box-shadow: 0 0 2px 0 rgba(0,0,0,0.12);
   }

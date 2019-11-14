@@ -42,10 +42,12 @@ axios.interceptors.response.use((res) => {
     let info = '系统异常'
     switch (res.data.code) {
       case 10000:
+        window.history.replaceState(null, null, "/home")
         router.push('/login')
         info = '您登录信息已过期'
         break;
       case 10001:
+        window.history.replaceState(null, null, "/home")
         router.push('/login')
         info = '您登录信息已过期'
         break;
