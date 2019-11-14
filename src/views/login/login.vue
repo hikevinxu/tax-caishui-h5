@@ -180,8 +180,8 @@ export default {
               utm_medium: this.$store.getters.getUtmMedium,
               phone: this.userName
             })
-            sa.login(res.data.uid)
           }
+          sa.login(res.data.authInfo.uid)
           Toast('登录成功')
           this.$store.dispatch('save_user_phone', this.userName)
           this.$store.dispatch('save_token', res.data.accessToken)
