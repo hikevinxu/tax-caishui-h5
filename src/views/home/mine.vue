@@ -1,13 +1,13 @@
 <template>
   <div class="mine_page">
     <div class="avatar">
-      <div v-if="avatar != '' && token && token !=''">
+      <div v-if="avatar != '' && (token && token !='')">
          <img :src="avatar" alt="">
       </div>
-      <div v-if="avatar == '' && token && token != ''">
+      <div v-else-if="avatar == '' && (token && token != '')">
         <img src="../../assets/global/img_default_avatar.png" alt="">
       </div>
-      <div v-if="token == ''"  @click.stop="login">
+      <div v-else  @click.stop="login">
         <img src="../../assets/global/img_default_avatar.png" alt="">
       </div>
     </div>
