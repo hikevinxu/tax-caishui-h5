@@ -26,19 +26,13 @@ if (process.env.VUE_APP_DEPLOY == "prod") {
   server_url = config.SC_server_sit_url
 }
 
-// router.beforeEach((to, from, next) => {
-//   /* 路由发生变化修改页面title */
-//   if (to.meta.title) {
-//     document.title = to.meta.title
-//   }
-//   if (to.name === 'login' && from.name !== 'powerOfAttoney') {
-//     next({
-//       path: '/home'
-//     })
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  /* 路由发生变化修改页面title */
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  next()
+})
 
 sa.init({
   // 正式地址：
