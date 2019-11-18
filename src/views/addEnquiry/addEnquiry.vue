@@ -172,6 +172,7 @@ export default {
           if (res.data) {
             this.getIntentionInfo()
           } else {
+            window.history.replaceState(null, null, "/home")
             this.$router.push('inquiry')
           }
         }
@@ -362,6 +363,7 @@ export default {
             message: '当前有询价单正在报价',
             confirmButtonText: '点击查看'
           }).then(() => {
+            window.history.replaceState(null, null, "/home")
             this.$router.push('/inquiry')
           })
         }

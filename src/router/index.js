@@ -71,14 +71,14 @@ export default new Router({
         title: '提交成功'
       }
     },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('../views/login/login.vue'),
-      meta: {
-        title: '登陆'
-      }
-    },
+    // {
+    //   path: '/login',
+    //   name: 'login',
+    //   component: () => import('../views/login/login.vue'),
+    //   meta: {
+    //     title: '登陆'
+    //   }
+    // },
     {
       path: '/history',
       name: 'history',

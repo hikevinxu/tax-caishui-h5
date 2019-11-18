@@ -1,8 +1,15 @@
 <template>
   <div class="mine_page">
-    <div class="avatar" @click.stop="login">
-      <img v-if="avatar != ''" :src="avatar" alt="">
-      <img v-else src="../../assets/global/img_default_avatar.png" alt="">
+    <div class="avatar">
+      <div v-if="avatar != '' && token && token !=''">
+         <img :src="avatar" alt="">
+      </div>
+      <div v-if="avatar == '' && token && token != ''">
+        <img src="../../assets/global/img_default_avatar.png" alt="">
+      </div>
+      <div v-if="token == ''"  @click.stop="login">
+        <img src="../../assets/global/img_default_avatar.png" alt="">
+      </div>
     </div>
     <div v-if="token == ''" class="pleaseLogin" @click.stop="login">
       <i>请登录</i>
