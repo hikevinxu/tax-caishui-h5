@@ -53,10 +53,6 @@ axios.interceptors.response.use((res) => {
         // router.push('/login')
         info = '您登录信息已过期'
         break;
-      case 10001:
-        // router.push('/login')
-        info = '您登录信息已过期'
-        break;
       case 11000:
         return Promise.resolve(res)
     }
