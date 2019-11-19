@@ -1,5 +1,5 @@
 <template>
-  <div class="LoginDialogComponent">
+  <div class="LoginDialogComponent" v-if="isShowLoginBox">
     <van-popup :close-on-click-overlay="false" v-model="isShowLoginBox">
       <div class="loginBox">
         <div class="loginBox_title">
@@ -235,12 +235,16 @@ export default {
     destroy: function () {
       this.$destroy()
       document.body.removeChild(this.$el)
+    },
+    scrollTop () {
+      window.scroll(0, 0);
     }
   }
 }
 </script>
 <style lang="scss" scoped>
 .LoginDialogComponent {
+  min-height: 100vh;
   .van-popup--center {
     border-radius: 2px;
     transform: translate3d(-50%,-65%,0);
