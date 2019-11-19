@@ -64,6 +64,7 @@ export default {
         if(res.code == 0){
           this.serviceTypeList = res.data
           this.isLoading = false
+          this.scrollTop()
         }
       })
       let params = {
@@ -139,12 +140,16 @@ export default {
         })
         window.location.href = item.adValue
       }
+    },
+    scrollTop () {
+      window.scroll(0, 0);
     }
   }
 }
 </script>
 <style lang="scss" scoped>
 .home_page {
+  min-height: 100vh;
   padding: 56px 0;
   padding-top: 10px;
   .banner {
