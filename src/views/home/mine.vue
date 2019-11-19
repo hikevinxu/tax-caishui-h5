@@ -74,6 +74,14 @@ export default {
       this.finished = true
       this.loadingData = true
     }
+    if (localStorage.getItem('goXieyi') == '1') {
+      localStorage.setItem('goXieyi', '0')
+      if (localStorage.getItem('userPhone') && localStorage.getItem('userPhone') != '') {
+        this.$loginBox.showLoginBox(localStorage.getItem('userPhone'))
+      } else {
+        this.$loginBox.showLoginBox({autoSend: false})
+      }
+    }
   },
   methods: {
     init() {

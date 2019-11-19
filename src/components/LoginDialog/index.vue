@@ -241,8 +241,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .LoginDialogComponent {
-  width: 100vw;
-  height: 100vh;
   .van-popup--center {
     border-radius: 2px;
     transform: translate3d(-50%,-65%,0);
