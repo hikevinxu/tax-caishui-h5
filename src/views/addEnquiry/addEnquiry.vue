@@ -6,10 +6,10 @@
       <div class="formItem" v-for="(input, index) in inputList" :key="'input' + index">
         <label for="">{{input.name}}</label>
         <div class="input" v-if="input.type == 2">
-          <input v-model="input.value" @click="clickShowPicker(input)" readonly type="text" :placeholder="'请选择' + input.name">
+          <input v-model="input.value" @blur="scrollTop" @click="clickShowPicker(input)" readonly type="text" :placeholder="'请选择' + input.name">
         </div>
         <div class="input" v-if="input.type == 1">
-          <input v-model="input.value" type="text" :placeholder="'请输入' + input.name">
+          <input @blur="scrollTop" v-model="input.value" type="text" :placeholder="'请输入' + input.name">
         </div>
         <div class="selectLogo" v-if="input.type == 2">
           <img src="@/assets/global/ic_chevron_right_small.png" alt="">
@@ -18,7 +18,7 @@
       <div class="formItem" @click="jumpArea">
         <label for="">需求地区</label>
         <div class="input">
-          <input v-model="area" @click="show = true" readonly type="text" placeholder="请选择需求地区">
+          <input v-model="area" @blur="scrollTop" @click="show = true" readonly type="text" placeholder="请选择需求地区">
         </div>
         <div class="selectLogo">
           <img src="@/assets/global/ic_chevron_right_small.png" alt="">
@@ -27,19 +27,19 @@
       <div class="formItem">
         <label for="">姓名</label>
         <div class="input">
-          <input maxlength="10" v-model="name" type="text" placeholder="请输入姓名">
+          <input maxlength="10" v-model="name" type="text" @blur="scrollTop" placeholder="请输入姓名">
         </div>
       </div>
       <div class="formItem">
         <label for="">联系方式</label>
         <div class="input">
-          <input maxlength="11" v-model="phone" :readonly="readOnlyPhone" type="tel" placeholder="请输入手机号">
+          <input maxlength="11" v-model="phone" @blur="scrollTop" :readonly="readOnlyPhone" type="tel" placeholder="请输入手机号">
         </div>
       </div>
       <div class="formItem textarea">
         <label for="">备注</label>
         <div class="input">
-          <textarea maxlength="100" v-model="remark" type="text" autoHeight="true" placeholder="输入备注信息"></textarea>
+          <textarea maxlength="100" @blur="scrollTop" v-model="remark" type="text" autoHeight="true" placeholder="输入备注信息"></textarea>
         </div>
       </div>
     </div>
@@ -131,13 +131,13 @@ export default {
       }
     }
     // 微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
-    // window.addEventListener('resize', function () {
-    //   if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
-    //     window.setTimeout(function () {
-    //       document.activeElement.scrollIntoViewIfNeeded()
-    //     }, 0)
-    //   }
-    // })
+    window.addEventListener('resize', function () {
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+        window.setTimeout(function () {
+          document.activeElement.scrollIntoViewIfNeeded()
+        }, 0)
+      }
+    })
   },
   methods: {
     // 初始化
@@ -377,6 +377,9 @@ export default {
       this.area = data.area
       this.areaCode = data.code
       this.areaSelectShow = false
+    },
+    scrollTop () {
+      window.scroll(0, 0);
     }
   }
 }

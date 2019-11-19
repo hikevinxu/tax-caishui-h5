@@ -8,10 +8,10 @@
         </div>
         <div class="loginInfoInput">
           <div class="userName">
-            <input type="tel" maxlength="11" v-model="userName" placeholder="请输入手机号码">
+            <input type="tel" maxlength="11" @blur="scrollTop" v-model="userName" placeholder="请输入手机号码">
           </div>
           <div class="password">
-            <input type="tel" maxlength="4" v-model="password" placeholder="验证码">
+            <input type="tel" maxlength="4" @blur="scrollTop" v-model="password" placeholder="验证码">
             <span ref="getYZMInput" v-if="!regain" @click="getYZM($event, 'sms')">获取验证码</span>
             <span v-if="regain" @click="getYZM($event, 'sms')">{{num}}秒后重新获取</span>
           </div>
