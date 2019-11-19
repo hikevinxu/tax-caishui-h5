@@ -36,6 +36,7 @@ html, body {
   color: #2c3e50;
   font-size: 16px;
   background-color: #fff;
+  overflow: scroll;
   -webkit-overflow-scrolling: touch;  
   position: absolute;  
   left:0;
