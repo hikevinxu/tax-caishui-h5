@@ -354,6 +354,7 @@ export default {
             })
           } else {
             this.$loginBox.showLoginBox({userName : this.phone, autoSend: true}).then((val) => {
+              this.phone = val
               this.addEnquiry()
             })
           }

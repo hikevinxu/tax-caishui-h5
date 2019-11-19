@@ -27,6 +27,7 @@ export default {
   color: #2c3e50;
   font-size: 16px;
   background-color: #fff;
+  min-height: 100vh;
 }
 @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
   /*增加头部适配层*/
