@@ -69,13 +69,13 @@ export default {
   },
   mounted () {
     // 微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
-    window.addEventListener('resize', function () {
-      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
-        window.setTimeout(function () {
-          document.activeElement.scrollIntoViewIfNeeded()
-        }, 0)
-      }
-    })
+    // window.addEventListener('resize', function () {
+    //   if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+    //     window.setTimeout(function () {
+    //       document.activeElement.scrollIntoViewIfNeeded()
+    //     }, 0)
+    //   }
+    // })
     var that = this
     // initNECaptcha为全局函数，可直接调用
     initNECaptcha({
@@ -241,6 +241,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .LoginDialogComponent {
+  width: 100vw;
+  height: 100vh;
   .van-popup--center {
     border-radius: 2px;
     transform: translate3d(-50%,-65%,0);
@@ -273,6 +275,11 @@ export default {
       margin-top: 16px;
       .password {
         position: relative;
+      }
+      .userName {
+        input {
+          width: 100%;
+        }
       }
       .userName,
       .password {

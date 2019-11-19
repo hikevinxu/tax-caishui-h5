@@ -66,8 +66,8 @@ export default {
       $utm_source: this.$store.getters.getUtmSource,
       $utm_medium: this.$store.getters.getUtmMedium
     })
-    this.token = localStorage.getItem('token')
-    let token = localStorage.getItem('token')
+    this.token = localStorage.getItem('token') || ''
+    let token = localStorage.getItem('token') || ''
     if (token && token != '') {
       this.init()
     } else {
