@@ -194,9 +194,9 @@ export default {
         if (res.code === 0) {
           if(res.data.authInfo.newRegistration && res.data.authInfo.newRegistration == true){
             sa.track('WebSignUp', {
-              target: this.$store.getters.getUtmSource,
-              utm_source: this.$store.getters.getUtmSource,
-              utm_medium: this.$store.getters.getUtmMedium,
+              target: store.getters.getUtmSource,
+              utm_source: store.getters.getUtmSource,
+              utm_medium: store.getters.getUtmMedium,
               phone: this.userName
             })
           }
