@@ -26,7 +26,7 @@ export default new Router({
           name: 'home',
           component: () => import('../views/home/home.vue'),
           meta: {
-            title: '所有服务'
+            title: '请选择所需服务项目'
           }
         },
         {
