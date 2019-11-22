@@ -1,5 +1,5 @@
 <template>
-  <div class="mainFream_page">
+  <div :class="source == 'zsfp' ? 'mainFream_page' : 'mainFream_page mainFream_ios'">
     <router-view />
     <van-tabbar route active-color="#FF7F4A" inactive-color="#9e9e9e">
       <van-tabbar-item replace to="/home" icon="service">
@@ -35,16 +35,17 @@ export default {
       mineIcon: {
         normal: require('@/assets/global/tabbar_mine.png'),
         active: require('@/assets/global/tabbar_mine_active.png')
-      }
+      },
+      source: ''
     }
   },
   created() {
-
+    this.source = this.$store.getters.getUtmSource
   }
 }
 </script>
 <style lang="scss" scoped>
-.mainFream_page {
+.mainFream_ios {
    @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
     .van-tabbar--fixed {
       bottom: 34Px;

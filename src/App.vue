@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="has-bottombar">
+  <div id="app" :class="source == 'zsfp' ? '' : 'has-bottombar'">
     <keep-alive :include="keepAlive">
       <router-view />
     </keep-alive>
@@ -10,8 +10,12 @@
 export default {
   data () {
     return {
-      keepAlive: ['login', 'addEnquiry']
+      keepAlive: ['login', 'addEnquiry'],
+      source: ''
     }
+  },
+  created() {
+    this.source = this.$store.getters.getUtmSource
   },
   methods: {
   }
