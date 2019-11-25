@@ -16,8 +16,8 @@
           <img src="@/assets/global/img_page_in_audit.png" alt="">
         </div>
         <div class="submitSuccess">您的需求已经提交成功</div>
-        <div class="contact">等待商家联系…</div>
-        <!-- <div class="noEnquiryMsg">当前25家商家正在报价中，请等待…</div> -->
+        <!-- <div class="contact">等待商家联系…</div> -->
+        <div class="noEnquiryMsg">财税鱼将为您匹配1-3家商户<br />让您货比三家，祝你找到合适的落地服务！</div>
       </div>
     </div>
   </div>
@@ -131,6 +131,7 @@ export default {
         margin-top: 40px;
         font-family: PingFangSC-Regular;
         font-size: 12px;
+        line-height: 20px;
         color: rgba(0,0,0,0.60);
       }
     }
