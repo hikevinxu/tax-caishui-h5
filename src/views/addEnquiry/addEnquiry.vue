@@ -358,7 +358,7 @@ export default {
               this.addEnquiry()
             })
           }
-        } else if(err.data.code == 10001) {
+        } else if(err.data.code == 10002) {
           Dialog.alert({
             title: '温馨提示',
             message: '当前有询价单正在报价',
