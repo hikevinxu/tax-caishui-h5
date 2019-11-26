@@ -56,6 +56,14 @@ export default new Router({
       }
     },
     {
+      path: '/detail',
+      name: 'detail',
+      component: () => import('../views/home/detail.vue'),
+      meta: {
+        title: ''
+      }
+    },
+    {
       path: '/area',
       name: 'area',
       component: () => import('../views/addEnquiry/area.vue'),

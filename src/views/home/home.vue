@@ -86,8 +86,35 @@ export default {
         $utm_source: this.$store.getters.getUtmSource,
         $utm_medium: this.$store.getters.getUtmMedium
       })
-      localStorage.setItem('first', '1')
-      this.$router.push('addEnquiry?code=' + item.code + '&name=' + item.name)
+      if(process.env.VUE_APP_DEPLOY == "prod") {
+        // 正式环境
+        if(item.code == '101001') {
+          // 公司注册
+          localStorage.setItem('first', '1')
+          this.$router.push('detail?code=' + item.code + '&name=' + item.name)
+        } else if(item.code == '100001') {
+          // 代理记账
+          localStorage.setItem('first', '1')
+          this.$router.push('detail?code=' + item.code + '&name=' + item.name)
+        } else {
+          localStorage.setItem('first', '1')
+          this.$router.push('addEnquiry?code=' + item.code + '&name=' + item.name)
+        }
+      } else {
+        // 测试环境、开发环境
+        if(item.code == '101001') {
+          // 公司注册
+          localStorage.setItem('first', '1')
+          this.$router.push('detail?code=' + item.code + '&name=' + item.name)
+        } else if(item.code == '100001') {
+          // 代理记账
+          localStorage.setItem('first', '1')
+          this.$router.push('detail?code=' + item.code + '&name=' + item.name)
+        } else {
+          localStorage.setItem('first', '1')
+          this.$router.push('addEnquiry?code=' + item.code + '&name=' + item.name)
+        }
+      }
       // let token = localStorage.getItem('token')
       // if (token && token != '') {
       //   let params = {

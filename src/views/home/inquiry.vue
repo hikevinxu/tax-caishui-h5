@@ -50,7 +50,7 @@ export default {
     return {
       listQuery: {
         pageNum: 1,
-        pageSize: 10
+        pageSize: 5
       },
       intentionList: [],
       total: 0,
@@ -68,7 +68,7 @@ export default {
       $utm_source: this.$store.getters.getUtmSource,
       $utm_medium: this.$store.getters.getUtmMedium
     })
-    window.addEventListener('scroll',this.loadMore)
+    window.addEventListener('scroll', this.loadMore, true)
     let token = localStorage.getItem('token')
     if (token && token != '') {
       this.getList()
@@ -135,7 +135,7 @@ export default {
       if(!this.finished) {
         clearTimeout(this.timer)  // 节流
         this.timer = setTimeout(()=>{
-          let {scrollTop,clientHeight,scrollHeight} = e.target.scrollingElement
+          let {scrollTop,clientHeight,scrollHeight} = e.target
           if(scrollTop + clientHeight + 20 > scrollHeight){
             this.getList()  // 获取更多
           }
@@ -145,6 +145,9 @@ export default {
     goHistory() {
       this.$router.push('history')
     }
+  },
+  destroyed: function () {
+    window.removeEventListener('scroll', this.loadMore)   //  离开页面清除（移除）滚轮滚动事件
   }
 }
 </script>

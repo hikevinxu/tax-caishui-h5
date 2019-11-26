@@ -1,5 +1,5 @@
 <template>
-  <div class="inquiry_page">
+  <div class="inquiry_page" id="scroll">
     <!-- <Header title="历史记录" :isBack="true" /> -->
     <Empty-List message="暂无记录" v-if="total == 0" />
     <div v-else class="inquiryRecord" ref="scroll" @scroll="loadMore">
@@ -55,7 +55,7 @@ export default {
       $utm_source: this.$store.getters.getUtmSource,
       $utm_medium: this.$store.getters.getUtmMedium
     })
-    window.addEventListener('scroll',this.loadMore)
+    window.addEventListener('scroll', this.loadMore, true)
     let token = localStorage.getItem('token')
     if (token && token != '') {
       this.getList()
@@ -116,18 +116,22 @@ export default {
       })
     },
     loadMore(e) {
+      console.log(e)
       // 卷去的高度   当前可见区域  总高
       // 触发scroll事件 可能触发n次  先进来开一个定时器，下次触发时将上一次定时器清除掉
       if(!this.finished) {
         clearTimeout(this.timer)  // 节流
         this.timer = setTimeout(()=>{
-          let {scrollTop,clientHeight,scrollHeight} = e.target.scrollingElement
+          let {scrollTop,clientHeight,scrollHeight} = e.target
           if(scrollTop + clientHeight + 20 > scrollHeight){
             this.getList()  // 获取更多
           }
         },60)
       }
     }
+  },
+  destroyed: function () {
+    window.removeEventListener('scroll', this.loadMore)   //  离开页面清除（移除）滚轮滚动事件
   }
 }
 </script>
