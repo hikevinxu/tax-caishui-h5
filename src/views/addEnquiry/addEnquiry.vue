@@ -335,6 +335,10 @@ export default {
       }
       enquiryApi.intentionCreate(params).then(res => {
         if(res.code == 0) {
+          console.log(123)
+          console.log(window._agl)
+          window._agl && window._agl.push(['track', ['success', {t: 3}]])
+          console.log(456)
           sa.track("WebUserEnquiryClick",{
             code: this.$route.query.code,
             name: this.$route.query.name,
