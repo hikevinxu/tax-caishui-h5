@@ -345,9 +345,17 @@ export default {
             $utm_source: this.$store.getters.getUtmSource,
             $utm_medium: this.$store.getters.getUtmMedium
           })
-          Toast('询价已发送成功，等待商家与您联系！')
-          window.history.replaceState(null, null, "/home")
-          this.$router.push('/success?name=' + this.$route.query.name)
+          Dialog.alert({
+            title: '提交成功',
+            message: '财税鱼将为您匹配1-3家商户\n让您货比三家，祝你找到合适的落地服务！',
+            confirmButtonText: '我知道了',
+            closeOnPopstate: true
+          }).then(() => {
+            window.history.replaceState(null, null, "/home")
+            this.$router.push('/inquiry')
+          })
+          // window.history.replaceState(null, null, "/home")
+          // this.$router.push('/success?name=' + this.$route.query.name)
         }
       }).catch((err) => {
         if (err.data.code == 10000) {
