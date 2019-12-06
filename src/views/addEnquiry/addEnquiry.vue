@@ -46,7 +46,7 @@
     <div class="submitBtn">
       <p>我们将对您的号码严格保密，请放心使用</p>
       <div class="freeEnquiryBtn">
-        <van-button type="primary" size="large" @click="addEnquiry">免 费 询 价</van-button>
+        <van-button id="addEnquiry" type="primary" size="large" @click="addEnquiry">免 费 询 价</van-button>
       </div>
     </div>
     <van-popup
@@ -337,6 +337,8 @@ export default {
         if(res.code == 0) {
           console.log(123)
           console.log(window._agl)
+          console.log(window._hmt)
+          _hmt.push(['_trackEvent', 'services', 'submit_success', this.$route.query.name , 200.00]);
           window._agl && window._agl.push(['track', ['success', {t: 3}]])
           console.log(456)
           sa.track("WebUserEnquiryClick",{

@@ -4,7 +4,7 @@
       <img v-for="(img, index) in imgData.imgList" :key="index" :src="img" alt="">
     </div>
     <div :class="source == 'zsfp' ? 'btn' : 'btn iphoneX'">
-      <van-button type="primary" size="large" @click="addEnquiry">立 即 询 价</van-button>
+      <van-button id="enquiryDetail" type="primary" size="large" @click="addEnquiry">立 即 询 价</van-button>
     </div>
   </div>
 </template>
