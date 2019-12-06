@@ -4,7 +4,7 @@
       <img v-for="(img, index) in imgData.imgList" :key="index" :src="img" alt="">
     </div>
     <div :class="source == 'zsfp' ? 'btn' : 'btn iphoneX'">
-      <van-button id="enquiryDetail" type="primary" size="large" @click="addEnquiry">立 即 询 价</van-button>
+      <van-button id="enquiryDetail" type="primary" size="large" @click="addEnquiry">立即询价</van-button>
     </div>
   </div>
 </template>
@@ -81,15 +81,17 @@ export default {
     .van-button--large {
       height: 44px;
       line-height: 44px;
-      background-image: linear-gradient(135deg, #FFAD71 0%, #FF7F4A 100%);
-      border-radius: 2px;
+      // background-image: linear-gradient(135deg, #FFAD71 0%, #FF7F4A 100%);
+      background-image: linear-gradient(45deg, #0858E6 0%, #38BDFF 100%);
+      box-shadow: 0 4px 8px 0 rgba(8,88,230,0.30);
+      border-radius: 22px;
       border: 0;
       .van-button__text {
         font-family: PingFangSC-Medium;
-        font-size: 16px;
+        font-size: 18px;
         color: #FFFFFF;
         text-align: center;
-        line-height: 18px;
+        line-height: 22px;
       }
     }
   }

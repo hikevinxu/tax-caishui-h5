@@ -5,9 +5,11 @@ export let imgDetailData = [
     prodCode: '101001',
     name: '公司注册',
     imgList: [
-      'https://res.caishuiyu.com/common/service_introduction/img/registered-1@3x.png',
-      'https://res.caishuiyu.com/common/service_introduction/img/registered-2@3x.png',
-      'https://res.caishuiyu.com/common/service_introduction/img/registered-3@3x.png'
+      require('../assets/serviceDetail/registered-1.png'),
+      require('../assets/serviceDetail/registered-2.png'),
+      require('../assets/serviceDetail/registered-3.png'),
+      require('../assets/serviceDetail/registered-4.png'),
+      require('../assets/serviceDetail/registered-5.png')
     ]
   },
   // 代理记账详情页图片
