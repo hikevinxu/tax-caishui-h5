@@ -163,6 +163,9 @@ export default {
         for(let i=0;i<this.searchList.length;i++){
           if(this.searchList[i].code == val.code) {
             this.areaSelectData = this.searchList[i]
+            this.areaSelectData.provinceCode = this.searchList[i].parentCode
+            this.areaSelectData.cityCode = this.searchList[i].code
+            console.log(this.areaSelectData)
           }
         }
         this.areaShow = true

@@ -41,6 +41,8 @@ export default {
     selectArea(area) {
       area.provinceName = this.areaSelectData.parentName
       area.cityName = this.areaSelectData.name
+      area.provinceCode = this.areaSelectData.provinceCode
+      area.cityCode = this.areaSelectData.cityCode
       this.$emit('areaSelect', area)
     }
   }

@@ -209,7 +209,7 @@ export default {
           this.isShowLoginBox = false
           // router.push(router.currentRoute.fullPath)
           localStorage.setItem('first', '1')
-          if (router.currentRoute.path == '/addEnquiry') {
+          if (router.currentRoute.path == '/addEnquiry' || router.currentRoute.path == '/companyRegister') {
             this.confirm(this.userName)
           } else {
             window.location.reload()

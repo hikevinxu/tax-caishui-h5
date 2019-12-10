@@ -10,7 +10,7 @@
 export default {
   data () {
     return {
-      keepAlive: ['login', 'addEnquiry'],
+      keepAlive: ['login', 'addEnquiry', 'companyRegister'],
       source: ''
     }
   },
@@ -18,12 +18,13 @@ export default {
     this.source = this.$store.getters.getUtmSource
   },
   methods: {
+
   }
 }
 </script>
 
 <style lang="scss">
-html, body {  
+html, body {
   width: 100%;  
   height: 100%;  
   margin: 0;  

@@ -104,6 +104,14 @@ export default new Router({
       }
     },
     {
+      path: '/companyRegister',
+      name: 'companyRegister',
+      component: () => import('../views/landPage/companyRegister.vue'),
+      meta: {
+        title: '公司注册'
+      }
+    },
+    {
       path: '/powerOfAttoney',
       name: 'powerOfAttoney',
       component: () => import('../views/login/powerOfAttoney.vue'),

@@ -75,4 +75,12 @@ export default {
   addressOverseasTree (params) {
     return fetchGet('/address/overseasTree', params)
   }, 
+  /**
+   * 获取区县列表
+   * @function addressAreas
+   * @type 'Get'
+   */
+  addressAreas(params) {
+    return fetchGet('/address/areas', params)
+  }, 
 }
