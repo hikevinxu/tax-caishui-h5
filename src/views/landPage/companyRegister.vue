@@ -307,7 +307,7 @@ export default {
       clearTimeout(this.timer)  // 节流
       this.timer = setTimeout(()=>{
         let {scrollTop,clientHeight,scrollHeight} = e.target
-        if(scrollTop + clientHeight + 20 > scrollHeight){
+        if(scrollTop + clientHeight + 150 > scrollHeight){
           this.isBottom = true
           console.log(this.isBottom)
         } else {
