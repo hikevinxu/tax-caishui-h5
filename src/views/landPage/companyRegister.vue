@@ -189,7 +189,8 @@ export default {
         areaCode: '',
         childs: []
       },
-      isBottom: false
+      isBottom: false,
+      timer: undefined
     }
   },
   created() {
