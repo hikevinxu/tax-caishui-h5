@@ -18,33 +18,27 @@
         <label>电话<span>(加密, 放心填)*</span></label>
         <input maxlength="11" v-model="phone" type="tel" placeholder="请输入电话">
       </div>
-      <!-- <div class="formItem">
-        <label>需求地区<span>*</span></label>
-        <input readonly type="text" placeholder="请选择需求地区">
-        <div class="selectLogo">
-          <img src="@/assets/landPage/ic_chevron_right.png" alt="">
-        </div>
-      </div> -->
-      <div class="formSelectItem">
+      <div class="formItem formSelectItem">
         <label>需求地区<span>*</span></label>
         <div class="selectList">
-          <div class="selectList_item" @click="selectDemandArea(1)">
-            <!-- <div class="selectLogoImg">
-              <img v-if="demandAreaType == 1" src="@/assets/landPage/ic_radio_on.png" alt="">
+          <div class="selectList_item"  @click="changeArea(1)">
+            <div class="selectLogoImg">
+              <img v-if="selectCityType == 1" src="@/assets/landPage/ic_radio_on.png" alt="">
               <img v-else src="@/assets/landPage/ic_radio_off.png" alt="">
-            </div> -->
-            <div style="margin-left: 0;" class="selectText">{{areaSelectData.name == '' ? '上海市' : areaSelectData.name}}</div>
+            </div>
+            <div class="selectText">上海市</div>
           </div>
-          <div class="selectList_item" @click="selectDemandArea(2)">
-            <!-- <div class="selectLogoImg">
-              <img v-if="demandAreaType == 2" src="@/assets/landPage/ic_radio_on.png" alt="">
+          <div class="selectList_item" @click="changeArea(2)">
+            <div class="selectLogoImg">
+              <img v-if="selectCityType == 2" src="@/assets/landPage/ic_radio_on.png" alt="">
               <img v-else src="@/assets/landPage/ic_radio_off.png" alt="">
-            </div> -->
-            <div style="margin-left: 0;" class="selectText">{{areaSelectData.areaName == '' ? '选择行政区' : areaSelectData.areaName}}</div>
-          </div>
-          <div class="selectCity" @click="selectDemandArea(3)">
+            </div>
             <div class="selectText">其他城市</div>
           </div>
+        </div>
+        <input readonly type="text" @click="selectDemandArea()" v-model="area" :placeholder="selectCityType == 1 ? '请选择行政区' : '请选择其他城市'">
+        <div class="selectLogo">
+          <img src="@/assets/landPage/ic_chevron_right.png" alt="">
         </div>
       </div>
       <div v-for="(input, index) in inputList" :key="index">
@@ -86,33 +80,27 @@
         <label>电话<span>(加密, 放心填)*</span></label>
         <input maxlength="11" v-model="phone" type="tel" placeholder="请输入电话">
       </div>
-      <!-- <div class="formItem">
-        <label>需求地区<span>*</span></label>
-        <input readonly type="text" placeholder="请选择需求地区">
-        <div class="selectLogo">
-          <img src="@/assets/landPage/ic_chevron_right.png" alt="">
-        </div>
-      </div> -->
-      <div class="formSelectItem">
+      <div class="formItem formSelectItem">
         <label>需求地区<span>*</span></label>
         <div class="selectList">
-          <div class="selectList_item" @click="selectDemandArea(1)">
-            <!-- <div class="selectLogoImg">
-              <img v-if="demandAreaType == 1" src="@/assets/landPage/ic_radio_on.png" alt="">
+          <div class="selectList_item"  @click="changeArea(1)">
+            <div class="selectLogoImg">
+              <img v-if="selectCityType == 1" src="@/assets/landPage/ic_radio_on.png" alt="">
               <img v-else src="@/assets/landPage/ic_radio_off.png" alt="">
-            </div> -->
-            <div style="margin-left: 0;" class="selectText">{{areaSelectData.name == '' ? '上海市' : areaSelectData.name}}</div>
+            </div>
+            <div class="selectText">上海市</div>
           </div>
-          <div class="selectList_item" @click="selectDemandArea(2)">
-            <!-- <div class="selectLogoImg">
-              <img v-if="demandAreaType == 2" src="@/assets/landPage/ic_radio_on.png" alt="">
+          <div class="selectList_item" @click="changeArea(2)">
+            <div class="selectLogoImg">
+              <img v-if="selectCityType == 2" src="@/assets/landPage/ic_radio_on.png" alt="">
               <img v-else src="@/assets/landPage/ic_radio_off.png" alt="">
-            </div> -->
-            <div style="margin-left: 0;" class="selectText">{{areaSelectData.areaName == '' ? '选择行政区' : areaSelectData.areaName}}</div>
-          </div>
-          <div class="selectCity" @click="selectDemandArea(3)">
+            </div>
             <div class="selectText">其他城市</div>
           </div>
+        </div>
+        <input readonly type="text" @click="selectDemandArea()" v-model="area" :placeholder="selectCityType == 1 ? '请选择行政区' : '请选择其他城市'">
+        <div class="selectLogo">
+          <img src="@/assets/landPage/ic_chevron_right.png" alt="">
         </div>
       </div>
       <div v-for="(input, index) in inputList" :key="index">
@@ -138,7 +126,7 @@
       </div>
     </div>
     <div class="counselPhone">
-      咨询电话：4001680458
+      咨询电话：400-168-0458
     </div>
     <a href="#form" class="fixed_bth">
       <img src="@/assets/landPage/ic_fill_flow.png" alt="">
@@ -169,8 +157,8 @@
 import enquiryApi from '@/api/enquiry'
 import globalApi from '@/api/globalApi'
 import Vue from 'vue'
-import { Button, Toast, Popup } from 'vant'
-Vue.use(Button).use(Toast).use(Popup)
+import { Button, Toast, Popup, Dialog } from 'vant'
+Vue.use(Button).use(Toast).use(Popup).use(Dialog)
 import AreaSelect from '@/components/AreaSelect/index'
 import { eventManager } from '@/utils/global'
 import sa from 'sa-sdk-javascript'
@@ -191,6 +179,7 @@ export default {
       areaCode: '',
       demandAreaType: 1,
       areaShow: false,
+      selectCityType: 1,
       areaSelectData: {
         parentName: '上海市',
         provinceCode: '310000',
@@ -272,21 +261,20 @@ export default {
         }
       })
     },
+    changeArea(val){
+      if(this.selectCityType != val) {
+        this.area = ''
+        this.areaCode = ''
+        this.selectCityType = val
+      }
+    },
     // 选择需求区域
-    selectDemandArea(val) {
-      this.demandAreaType = val
-      if(val == 1) {
-        return
-      }else if(val == 2){
+    selectDemandArea() {
+      if(this.selectCityType == 1){
         this.getCurrentArea()
-      }else if(val == 3) {
+      }else if(this.selectCityType == 2) {
         eventManager.addEvent('selectArea', (data) => {
           console.log(data)
-          this.areaSelectData.parentName = data.provinceName
-          this.areaSelectData.provinceCode = data.provinceCode
-          this.areaSelectData.name = data.cityName
-          this.areaSelectData.cityCode = data.cityCode
-          this.areaSelectData.areaName = data.name
           this.area = data.area
           this.areaCode = data.code
           eventManager.removeEvent('selectArea')
@@ -295,9 +283,6 @@ export default {
       }
     },
     selectCityChange(val) {
-      this.areaSelectData.parentName = val.provinceName
-      this.areaSelectData.name = val.cityName
-      this.areaSelectData.areaName = val.name
       this.area = val.provinceName + '-' + val.cityName + '-' + val.name
       this.areaCode = val.code
       this.areaShow = false
@@ -493,7 +478,10 @@ export default {
       input {
         width: 100%;
         height: 40px;
+        font-family: PingFangSC-Regular;
         box-sizing: border-box;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.6);
         padding: 10px 8px;
         line-height: 20px;
         border-bottom: 1px solid rgba(0,0,0,0.12);
@@ -566,6 +554,9 @@ export default {
             text-align: left;
             line-height: 32px;
             margin-left: 8px;
+          }
+          .selectText.select {
+            text-decoration: #FF7F4A;
           }
         }
       }
