@@ -1,5 +1,5 @@
 <template>
-  <div class="companyRegister_page">
+  <div class="companyRegister_page" id="companyRegister_page">
     <div class="header_img">
       <img src="@/assets/landPage/head.png" alt="">
     </div>
@@ -132,11 +132,11 @@
       <img src="@/assets/landPage/ic_fill_flow.png" alt="">
     </a>
     <div class="bottom_btn">
-      <a href="tel:4001680458" class="bottom_left">
+      <a href="tel:4001680458" :style="isBottom ? 'width: 100%;' : ''" class="bottom_left">
         <img src="@/assets/landPage/ic_button_call.png" alt="">
         <span>立即咨询</span>
       </a>
-      <a href="#form" class="bottom_right">
+      <a href="#form" :style="isBottom ? 'display: none;' : ''" class="bottom_right">
         <img src="@/assets/landPage/ic_button_apply.png" alt="">
         <span>0元注册公司，快速申请</span>
       </a>
@@ -188,7 +188,8 @@ export default {
         areaName: '',
         areaCode: '',
         childs: []
-      }
+      },
+      isBottom: false
     }
   },
   created() {
@@ -220,13 +221,15 @@ export default {
       }
     }
     // 微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
-    window.addEventListener('resize', function () {
+    window.addEventListener('resize', function (e) {
       if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
         window.setTimeout(function () {
           document.activeElement.scrollIntoViewIfNeeded()
         }, 0)
       }
     })
+    // 监听滚动到底部
+    window.addEventListener('scroll', this.scrollBottom, true)
   },
   methods: {
     changeRadio(index, selectValue) {
@@ -300,6 +303,19 @@ export default {
         }
       })
     },
+    scrollBottom(e) {
+      clearTimeout(this.timer)  // 节流
+      this.timer = setTimeout(()=>{
+        let {scrollTop,clientHeight,scrollHeight} = e.target
+        if(scrollTop + clientHeight + 20 > scrollHeight){
+          this.isBottom = true
+          console.log(this.isBottom)
+        } else {
+          this.isBottom = false
+          console.log(this.isBottom)
+        }
+      },60)
+    },
     // 提交表单 添加询价单
     submitForm() {
       if(!this.name || this.name == '') {
@@ -368,6 +384,10 @@ export default {
 
       enquiryApi.intentionCreate(params).then(res => {
         if(res.code == 0) {
+          console.log(window._agl)
+          console.log(window._hmt)
+          _hmt.push(['_trackEvent', 'services', 'submit_success', this.$route.query.name , 200.00]);
+          window._agl && window._agl.push(['track', ['success', {t: 3}]])
           sa.track("WebUserEnquiryClick",{
             code: this.$route.query.code,
             name: this.$route.query.name,
@@ -634,7 +654,6 @@ export default {
     box-shadow: 0 -8px 16px 0 rgba(251,83,50,0.24);
     display: flex;
     .bottom_left {
-      display: block;
       width: 120px;
       height: 100%;
       background: #FFFFFF;
@@ -643,16 +662,13 @@ export default {
       color: #FB5332;
       text-align: center;
       img {
-        float: left;
         width: 24px;
         height: 24px;
         margin-top: 20px;
-        margin-left: 16px;
+        vertical-align: top;
       }
       span {
-        float: left;
         margin-left: 4px;
-        vertical-align: middle;
         line-height: 64px;
       }
     }
