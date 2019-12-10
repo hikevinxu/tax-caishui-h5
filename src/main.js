@@ -8,14 +8,14 @@ import store from './store/index'
 import '@/common/css/reset.css'
 import '@/common/css/animate.css'
 import { getQueryString } from '@/utils/global'
-import VConsole from 'vconsole'
+// import VConsole from 'vconsole'
 
 import LoginBox from '@/components/LoginDialog/index'
 Vue.use(LoginBox)
 
 Vue.config.productionTip = false
 /* eslint-disable no-new */
-new VConsole()
+// new VConsole()
 
 import { config } from '@/utils/global'
 
