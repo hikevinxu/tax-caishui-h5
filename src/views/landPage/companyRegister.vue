@@ -207,12 +207,12 @@ export default {
   },
   activated() {
     document.title = this.serviceName  + '询价'
-    // sa.quick("autoTrackSinglePage",{
-    //   $title: '询价表单生成页',
-    //   $screen_name: `enquiry_form_generate_page`,
-    //   $utm_source: this.$store.getters.getUtmSource,
-    //   $utm_medium: this.$store.getters.getUtmMedium
-    // })
+    sa.quick("autoTrackSinglePage",{
+      $title: '公司注册落地页',
+      $screen_name: `company_register_page`,
+      $utm_source: this.$store.getters.getUtmSource,
+      $utm_medium: this.$store.getters.getUtmMedium
+    })
     if (localStorage.getItem('first') == '1') {
       localStorage.setItem('first', '0')
       this.getIntentionExtends()
