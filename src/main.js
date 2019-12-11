@@ -44,7 +44,7 @@ sa.init({
   is_track_single_page: true,
   heatmap: {
     // 是否开启点击图，默认 default 表示开启，自动采集 $WebClick 事件，可以设置 'not_collect' 表示关闭
-    clickmap: 'not_collect',
+    clickmap: 'default',
     // 是否开启触达注意力图，默认 default 表示开启，自动采集 $WebStay 事件，可以设置 'not_collect' 表示关闭
     scroll_notice_map: 'not_collect',
     show_log: false
