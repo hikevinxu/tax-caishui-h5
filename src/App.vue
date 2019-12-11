@@ -10,7 +10,7 @@
 export default {
   data () {
     return {
-      keepAlive: ['login', 'addEnquiry', 'companyRegister'],
+      keepAlive: ['login', 'addEnquiry', 'companyRegister', 'companyLogout'],
       source: ''
     }
   },

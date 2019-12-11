@@ -112,6 +112,14 @@ export default new Router({
       }
     },
     {
+      path: '/companyLogout',
+      name: 'companyLogout',
+      component: () => import('../views/landPage/companyLogout.vue'),
+      meta: {
+        title: '公司注销'
+      }
+    },
+    {
       path: '/powerOfAttoney',
       name: 'powerOfAttoney',
       component: () => import('../views/login/powerOfAttoney.vue'),

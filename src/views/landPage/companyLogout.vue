@@ -1,36 +1,42 @@
 <template>
   <div class="companyRegister_page" id="companyRegister_page">
     <div class="header_img">
-      <img src="@/assets/landPage/head.png" alt="">
+      <img src="@/assets/landPage/logout_head.png" alt="">
     </div>
-    <div style="padding-top: 10px;" id="form">
-      <div class="notice">
-        <img src="@/assets/landPage/ic_notice.png" alt="">
-        <span>目前已经有<i>1127人</i>参与活动</span>
-      </div>
-    </div>
+    <div style="padding-top: 10px;" id="form"></div>
     <div class="form">
-      <div class="formItem">
-        <label>姓名<span>(加密, 放心填)*</span></label>
-        <input maxlength="10" v-model="name" type="text" placeholder="请输入姓名">
-      </div>
-      <div class="formItem">
-        <label>电话<span>(加密, 放心填)*</span></label>
-        <input maxlength="11" v-model="phone" type="tel" placeholder="请输入电话">
+      <div class="form_title">算一算公司注销报价</div>
+      <div v-for="(input, index) in inputList" :key="index">
+        <div class="formSelectItem" v-if="input.type == 2">
+          <label>{{input.name}}</label>
+          <div class="selectList">
+            <div class="selectList_item" v-for="(value, valueIndex) in input.valueTrees" :key="'value' + valueIndex" @click="changeRadio(index, value)">
+              <div class="selectLogoImg">
+                <img v-if="input.valueCode == value.code" src="@/assets/landPage/ic_radio_on_g.png" alt="">
+                <img v-else src="@/assets/landPage/ic_radio_off.png" alt="">
+              </div>
+              <div class="selectText">{{value.name}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="formItem" v-if="input.type == 1">
+          <label>{{input.name}}</label>
+          <input v-model="input.value" @input="inputValueChange" type="text" :placeholder="'请输入' + input.name">
+        </div>
       </div>
       <div class="formItem formSelectItem">
-        <label>需求地区<span>*</span></label>
+        <label>需求地区</label>
         <div class="selectList">
           <div class="selectList_item"  @click="changeArea(1)">
             <div class="selectLogoImg">
-              <img v-if="selectCityType == 1" src="@/assets/landPage/ic_radio_on.png" alt="">
+              <img v-if="selectCityType == 1" src="@/assets/landPage/ic_radio_on_g.png" alt="">
               <img v-else src="@/assets/landPage/ic_radio_off.png" alt="">
             </div>
             <div class="selectText">上海市</div>
           </div>
           <div class="selectList_item" @click="changeArea(2)">
             <div class="selectLogoImg">
-              <img v-if="selectCityType == 2" src="@/assets/landPage/ic_radio_on.png" alt="">
+              <img v-if="selectCityType == 2" src="@/assets/landPage/ic_radio_on_g.png" alt="">
               <img v-else src="@/assets/landPage/ic_radio_off.png" alt="">
             </div>
             <div class="selectText">其他城市</div>
@@ -41,58 +47,68 @@
           <img src="@/assets/landPage/ic_chevron_right.png" alt="">
         </div>
       </div>
-      <div v-for="(input, index) in inputList" :key="index">
-        <div class="formSelectItem" v-if="input.type == 2">
-          <label>{{input.name}}<i>(单选)</i><span>*</span></label>
-          <div class="selectList">
-            <div class="selectList_item" v-for="(value, valueIndex) in input.valueTrees" :key="'value' + valueIndex" @click="changeRadio(index, value)">
-              <div class="selectLogoImg">
-                <img v-if="input.valueCode == value.code" src="@/assets/landPage/ic_radio_on.png" alt="">
-                <img v-else src="@/assets/landPage/ic_radio_off.png" alt="">
-              </div>
-              <div class="selectText">{{value.name}}</div>
-            </div>
-          </div>
-        </div>
-        <div class="formItem" v-if="input.type == 1">
-          <label>{{input.name}}<span>*</span></label>
-          <input v-model="input.value" @input="inputValueChange" type="text" :placeholder="'请输入' + input.name">
-        </div>
+      <div class="formItem">
+        <label>姓名</label>
+        <input maxlength="10" v-model="name" type="text" placeholder="请输入姓名">
+      </div>
+      <div class="formItem">
+        <label>电话</label>
+        <input maxlength="11" v-model="phone" type="tel" placeholder="请输入电话">
       </div>
       <div class="submitBtn">
-        <van-button id="submitForm" type="primary" size="large" @click="submitForm">抢0元注册公司，最快3天办好</van-button>
+        <van-button id="submitForm" type="primary" size="large" @click="submitForm">免费获取报价</van-button>
       </div>
     </div>
     <div class="intro_img">
-      <img src="@/assets/landPage/body_procedure.png" alt="">
-      <img src="@/assets/landPage/body_compare.png" alt="">
+      <img src="@/assets/landPage/body_01.png" alt="">
+      <img src="@/assets/landPage/body_02.png" alt="">
+      <div class="jumpBtn">
+        <img src="@/assets/landPage/button_mid_01.png" alt="">
+      </div>
+      <img src="@/assets/landPage/body_03.png" alt="">
+      <div class="jumpBtn">
+        <img src="@/assets/landPage/button_mid_02.png" alt="">
+      </div>
+      <img src="@/assets/landPage/body_04.png" alt="">
+      <img src="@/assets/landPage/body_about.png" alt="">
     </div>
-    <div class="notice">
+    <!-- <div class="notice">
       <img src="@/assets/landPage/ic_notice.png" alt="">
       <span>目前已经有<i>1127人</i>参与活动</span>
-    </div>
+    </div> -->
     <div class="form">
-      <div class="formItem">
-        <label>姓名<span>(加密, 放心填)*</span></label>
-        <input maxlength="10" v-model="name" type="text" placeholder="请输入姓名">
-      </div>
-      <div class="formItem">
-        <label>电话<span>(加密, 放心填)*</span></label>
-        <input maxlength="11" v-model="phone" type="tel" placeholder="请输入电话">
+      <div class="form_title">算一算公司注销报价</div>
+      <div v-for="(input, index) in inputList" :key="index">
+        <div class="formSelectItem" v-if="input.type == 2">
+          <label>{{input.name}}</label>
+          <div class="selectList">
+            <div class="selectList_item" v-for="(value, valueIndex) in input.valueTrees" :key="'value' + valueIndex" @click="changeRadio(index, value)">
+              <div class="selectLogoImg">
+                <img v-if="input.valueCode == value.code" src="@/assets/landPage/ic_radio_on_g.png" alt="">
+                <img v-else src="@/assets/landPage/ic_radio_off.png" alt="">
+              </div>
+              <div class="selectText">{{value.name}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="formItem" v-if="input.type == 1">
+          <label>{{input.name}}</label>
+          <input v-model="input.value" @input="inputValueChange" type="text" :placeholder="'请输入' + input.name">
+        </div>
       </div>
       <div class="formItem formSelectItem">
-        <label>需求地区<span>*</span></label>
+        <label>需求地区</label>
         <div class="selectList">
           <div class="selectList_item"  @click="changeArea(1)">
             <div class="selectLogoImg">
-              <img v-if="selectCityType == 1" src="@/assets/landPage/ic_radio_on.png" alt="">
+              <img v-if="selectCityType == 1" src="@/assets/landPage/ic_radio_on_g.png" alt="">
               <img v-else src="@/assets/landPage/ic_radio_off.png" alt="">
             </div>
             <div class="selectText">上海市</div>
           </div>
           <div class="selectList_item" @click="changeArea(2)">
             <div class="selectLogoImg">
-              <img v-if="selectCityType == 2" src="@/assets/landPage/ic_radio_on.png" alt="">
+              <img v-if="selectCityType == 2" src="@/assets/landPage/ic_radio_on_g.png" alt="">
               <img v-else src="@/assets/landPage/ic_radio_off.png" alt="">
             </div>
             <div class="selectText">其他城市</div>
@@ -103,42 +119,32 @@
           <img src="@/assets/landPage/ic_chevron_right.png" alt="">
         </div>
       </div>
-      <div v-for="(input, index) in inputList" :key="index">
-        <div class="formSelectItem" v-if="input.type == 2">
-          <label>{{input.name}}<i>(单选)</i><span>*</span></label>
-          <div class="selectList">
-            <div class="selectList_item" v-for="(value, valueIndex) in input.valueTrees" :key="'value' + valueIndex" @click="changeRadio(index, value)">
-              <div class="selectLogoImg">
-                <img v-if="input.valueCode == value.code" src="@/assets/landPage/ic_radio_on.png" alt="">
-                <img v-else src="@/assets/landPage/ic_radio_off.png" alt="">
-              </div>
-              <div class="selectText">{{value.name}}</div>
-            </div>
-          </div>
-        </div>
-        <div class="formItem" v-if="input.type == 1">
-          <label>{{input.name}}<span>*</span></label>
-          <input v-model="input.value" @input="inputValueChange" type="text" :placeholder="'请输入' + input.name">
-        </div>
+      <div class="formItem">
+        <label>姓名</label>
+        <input maxlength="10" v-model="name" type="text" placeholder="请输入姓名">
+      </div>
+      <div class="formItem">
+        <label>电话</label>
+        <input maxlength="11" v-model="phone" type="tel" placeholder="请输入电话">
       </div>
       <div class="submitBtn">
-        <van-button id="submitForm" type="primary" size="large" @click="submitForm">抢0元注册公司，最快3天办好</van-button>
+        <van-button id="submitForm" type="primary" size="large" @click="submitForm">免费获取报价</van-button>
       </div>
     </div>
-    <div class="counselPhone">
+    <!-- <div class="counselPhone">
       咨询电话：400-168-0458
-    </div>
-    <a href="#form" class="fixed_bth">
+    </div> -->
+    <!-- <a href="#form" class="fixed_bth">
       <img src="@/assets/landPage/ic_fill_flow.png" alt="">
-    </a>
+    </a> -->
     <div class="bottom_btn">
       <a href="tel:4001680458" :style="isBottom ? 'width: 100%;' : ''" class="bottom_left">
         <img src="@/assets/landPage/ic_button_call.png" alt="">
         <span>立即咨询</span>
       </a>
       <a href="#form" :style="isBottom ? 'display: none;' : ''" class="bottom_right">
-        <img src="@/assets/landPage/ic_button_apply.png" alt="">
-        <span>0元注册公司，快速申请</span>
+        <img src="@/assets/landPage/ic_button_freeapply.png" alt="">
+        <span>免费获取报价</span>
       </a>
     </div>
     <van-popup
@@ -170,8 +176,8 @@ export default {
   },
   data() {
     return {
-      serviceCode: '101001',
-      serviceName: '公司注册',
+      serviceCode: '101004',
+      serviceName: '公司注销',
       inputList: [],
       name: '',
       phone: '',
@@ -308,14 +314,14 @@ export default {
       clearTimeout(this.timer)  // 节流
       this.timer = setTimeout(()=>{
         let {scrollTop,clientHeight,scrollHeight} = e.target
-        if(scrollTop + clientHeight + 150 > scrollHeight){
+        if(scrollTop + clientHeight + 40 > scrollHeight){
           this.isBottom = true
           console.log(this.isBottom)
         } else {
           this.isBottom = false
           console.log(this.isBottom)
         }
-      },60)
+      }, 60)
     },
     // 提交表单 添加询价单
     submitForm() {
@@ -387,7 +393,7 @@ export default {
         if(res.code == 0) {
           console.log(window._agl)
           console.log(window._hmt)
-          _hmt.push(['_trackEvent', 'services', 'submit_success', '公司注册' , 200.00])
+          _hmt.push(['_trackEvent', 'services', 'submit_success', this.$route.query.name , 200.00]);
           window._agl && window._agl.push(['track', ['success', {t: 3}]])
           sa.track("WebUserEnquiryClick",{
             code: this.$route.query.code,
@@ -467,7 +473,7 @@ export default {
       color: #7C321E;
       line-height: 32px;
       i {
-        color: #FB5332;
+        color: #3F8C7F;
       }
     }
   }
@@ -478,6 +484,17 @@ export default {
     border-radius: 4px;
     border-radius: 4px;
     padding: 16px;
+    .form_title {
+      width: 100%;
+      height: 18px;
+      background: #FAFAFA;
+      font-family: PingFangSC-Semibold;
+      font-size: 16px;
+      color: #3F8C7F;
+      text-align: center;
+      line-height: 22px;
+      margin-bottom: 16px;
+    }
     .formItem {
       margin-bottom: 16px;
       position: relative;
@@ -507,7 +524,7 @@ export default {
         line-height: 20px;
         border-bottom: 1px solid rgba(0,0,0,0.12);
         &:focus {
-          border-bottom: 1px solid #FB5332;
+          border-bottom: 1px solid #3F8C7F;
         }
       }
       .selectLogo {
@@ -576,9 +593,6 @@ export default {
             line-height: 32px;
             margin-left: 8px;
           }
-          .selectText.select {
-            text-decoration: #FF7F4A;
-          }
         }
       }
       .selectCity {
@@ -604,8 +618,8 @@ export default {
         height: 40px;
         line-height: 40px;
         border: 0;
-        background-image: linear-gradient(135deg, #FF7F4A 0%, #FB5332 100%);
-        box-shadow: 0 4px 8px 0 rgba(251,83,50,0.24);
+        background-image: linear-gradient(135deg, #5AB3A4 0%, #007C61 100%);
+        box-shadow: 0 4px 8px 0 rgba(19,112,98,0.24);
         border-radius: 4px;
         .van-button__text {
           font-family: PingFangSC-Medium;
@@ -619,6 +633,9 @@ export default {
   }
   .intro_img {
     width: 100%;
+    .jumpBtn {
+      margin: 8px 72px;
+    }
     img {
       display: block;
       width: 100%;
@@ -678,16 +695,13 @@ export default {
       flex: 1;
       height: 100%;
       img {
-        float: left;
         width: 24px;
         height: 24px;
         margin-top: 20px;
-        margin-left: 29px;
+        vertical-align: top;
       }
       span {
-        float: left;
         margin-left: 4px;
-        vertical-align: middle;
         line-height: 64px;
         font-family: PingFangSC-Medium;
         font-size: 15px;
