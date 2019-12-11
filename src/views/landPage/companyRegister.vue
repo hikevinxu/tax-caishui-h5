@@ -132,7 +132,7 @@
       <img src="@/assets/landPage/ic_fill_flow.png" alt="">
     </a>
     <div class="bottom_btn">
-      <a href="tel:4001680458" :style="isBottom ? 'width: 100%;' : ''" class="bottom_left">
+      <a href="tel:4001680458" @click="contact" :style="isBottom ? 'width: 100%;' : ''" class="bottom_left">
         <img src="@/assets/landPage/ic_button_call.png" alt="">
         <span>立即咨询</span>
       </a>
@@ -316,6 +316,10 @@ export default {
           console.log(this.isBottom)
         }
       },60)
+    },
+    contact() {
+      _hmt.push(['_trackEvent', 'contact', 'call', this.serviceName , 100.00])
+      console.log(_hmt)
     },
     // 提交表单 添加询价单
     submitForm() {
