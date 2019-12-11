@@ -112,9 +112,25 @@ export default new Router({
       }
     },
     {
+      path: '/companyRegister_tt',
+      name: 'register_tt',
+      component: () => import('../views/landPage/register_tt.vue'),
+      meta: {
+        title: '公司注册'
+      }
+    },
+    {
       path: '/companyLogout',
       name: 'companyLogout',
       component: () => import('../views/landPage/companyLogout.vue'),
+      meta: {
+        title: '公司注销'
+      }
+    },
+    {
+      path: '/companyLogout_tt',
+      name: 'logout_tt',
+      component: () => import('../views/landPage/logout_tt.vue'),
       meta: {
         title: '公司注销'
       }
