@@ -320,6 +320,13 @@ export default {
     contact() {
       _hmt.push(['_trackEvent', 'contact', 'call', this.serviceName , 100.00])
       console.log(_hmt)
+      // sa.track("WebUserEnquiryClick",{
+      //   code: this.serviceCode,
+      //   name: this.serviceName,
+      //   page: this.serviceName + '落地页',
+      //   $utm_source: this.$store.getters.getUtmSource,
+      //   $utm_medium: this.$store.getters.getUtmMedium
+      // })
     },
     // 提交表单 添加询价单
     submitForm() {
