@@ -205,8 +205,8 @@ export default {
   activated() {
     document.title = this.serviceName  + '询价'
     sa.quick("autoTrackSinglePage",{
-      $title: '公司注册落地页',
-      $screen_name: `company_register_page`,
+      $title: this.serviceName + '落地页',
+      $screen_name: `company_logout_page`,
       $utm_source: this.$store.getters.getUtmSource,
       $utm_medium: this.$store.getters.getUtmMedium
     })
@@ -325,23 +325,6 @@ export default {
     },
     // 提交表单 添加询价单
     submitForm() {
-      if(!this.name || this.name == '') {
-        Toast.fail('姓名不能为空')
-        return
-      }
-      if(!this.phone || this.phone == '') {
-        Toast.fail('电话不能为空')
-        return
-      }
-      if(this.phone && this.phone.length != 11) {
-        Toast.fail('请输入11位合法手机号')
-        return
-      }
-      if(!this.area || this.area == '') {
-        Toast.fail('需求地区不能为空')
-        return
-      }
-
       console.log(this.inputList)
       let arr = []
       if (this.inputList && this.inputList.length > 0) {
@@ -378,6 +361,23 @@ export default {
         }
       }
 
+      if(!this.area || this.area == '') {
+        Toast.fail('需求地区不能为空')
+        return
+      }
+      if(!this.name || this.name == '') {
+        Toast.fail('姓名不能为空')
+        return
+      }
+      if(!this.phone || this.phone == '') {
+        Toast.fail('电话不能为空')
+        return
+      }
+      if(this.phone && this.phone.length != 11) {
+        Toast.fail('请输入11位合法手机号')
+        return
+      }
+
       localStorage.setItem('formPhone', this.phone)
 
       let params = {
@@ -393,12 +393,12 @@ export default {
         if(res.code == 0) {
           console.log(window._agl)
           console.log(window._hmt)
-          _hmt.push(['_trackEvent', 'services', 'submit_success', this.$route.query.name , 200.00]);
+          _hmt.push(['_trackEvent', 'services', 'submit_success', this.serviceName, 200.00]);
           window._agl && window._agl.push(['track', ['success', {t: 3}]])
           sa.track("WebUserEnquiryClick",{
             code: this.$route.query.code,
             name: this.$route.query.name,
-            page: '公司注册落地页',
+            page: this.serviceName + '落地页',
             $utm_source: this.$store.getters.getUtmSource,
             $utm_medium: this.$store.getters.getUtmMedium
           })

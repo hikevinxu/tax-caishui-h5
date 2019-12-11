@@ -387,12 +387,12 @@ export default {
         if(res.code == 0) {
           console.log(window._agl)
           console.log(window._hmt)
-          _hmt.push(['_trackEvent', 'services', 'submit_success', '公司注册' , 200.00])
+          _hmt.push(['_trackEvent', 'services', 'submit_success', this.serviceName , 200.00])
           window._agl && window._agl.push(['track', ['success', {t: 3}]])
           sa.track("WebUserEnquiryClick",{
             code: this.$route.query.code,
             name: this.$route.query.name,
-            page: '公司注册落地页',
+            page: this.serviceName + '落地页',
             $utm_source: this.$store.getters.getUtmSource,
             $utm_medium: this.$store.getters.getUtmMedium
           })

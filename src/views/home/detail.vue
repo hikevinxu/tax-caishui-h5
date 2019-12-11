@@ -3,7 +3,7 @@
     <div class="detail_img">
       <img v-for="(img, index) in imgData.imgList" :key="index" :src="img" alt="">
     </div>
-    <div :class="source == 'zsfp' ? 'btn' : 'btn iphoneX'">
+    <div :class="source == 'xlb' ? 'btn iphoneX' : 'btn'">
       <van-button id="enquiryDetail" type="primary" size="large" @click="addEnquiry">立即询价</van-button>
     </div>
   </div>

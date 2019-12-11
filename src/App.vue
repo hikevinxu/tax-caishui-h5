@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="source == 'zsfp' ? '' : 'has-bottombar'">
+  <div id="app" :class="source == 'xlb' ? 'has-bottombar' : ''">
     <keep-alive :include="keepAlive">
       <router-view />
     </keep-alive>
@@ -42,8 +42,8 @@ html, body {
   font-size: 16px;
   background-color: #fff;
   overflow: scroll;
-  -webkit-overflow-scrolling: touch;  
-  position: absolute;  
+  -webkit-overflow-scrolling: touch;
+  position: absolute;
   left:0;
   top:0;
 }
