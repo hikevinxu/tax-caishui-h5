@@ -62,13 +62,13 @@
     <div class="intro_img">
       <img src="@/assets/landPage/body_01.png" alt="">
       <img src="@/assets/landPage/body_02.png" alt="">
-      <div class="jumpBtn">
+      <a href="#form" class="jumpBtn">
         <img src="@/assets/landPage/button_mid_01.png" alt="">
-      </div>
+      </a>
       <img src="@/assets/landPage/body_03.png" alt="">
-      <div class="jumpBtn">
+      <a href="#form" class="jumpBtn">
         <img src="@/assets/landPage/button_mid_02.png" alt="">
-      </div>
+      </a>
       <img src="@/assets/landPage/body_04.png" alt="">
       <img src="@/assets/landPage/body_about.png" alt="">
     </div>
@@ -646,6 +646,7 @@ export default {
   .intro_img {
     width: 100%;
     .jumpBtn {
+      display: block;
       margin: 8px 72px;
     }
     img {
