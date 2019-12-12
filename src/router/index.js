@@ -120,6 +120,14 @@ export default new Router({
       }
     },
     {
+      path: '/companyRegister_new',
+      name: 'companyRegister_new',
+      component: () => import('../views/landPage/companyRegister_new.vue'),
+      meta: {
+        title: '公司注册'
+      }
+    },
+    {
       path: '/companyLogout',
       name: 'companyLogout',
       component: () => import('../views/landPage/companyLogout.vue'),

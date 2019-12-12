@@ -83,4 +83,21 @@ export default {
   addressAreas(params) {
     return fetchGet('/address/areas', params)
   }, 
+  /**
+   * 发送验证码
+   * @function channelPageObtainFormSendVerifycode
+   * @type 'POST'
+   */
+  channelPageObtainFormSendVerifycode (params) {
+    return fetchPost('/api/channelPage/obtainForm/send_verifycode', params)
+  },
+  /**
+   * 意向收集(需要短信验证)
+   * @function channelPageObtainFormSave
+   * @type 'Post'
+   */
+  channelPageObtainFormValidateSave (params) {
+    let paramsString = qs.stringify(params)
+    return fetchPost('/api/channelPage/obtainForm/validate/save', paramsString)
+  },
 }
