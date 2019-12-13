@@ -137,15 +137,23 @@
     <!-- <a href="#form" class="fixed_bth">
       <img src="@/assets/landPage/ic_fill_flow.png" alt="">
     </a> -->
-    <div class="bottom_btn">
-      <a href="tel:4001680458" @click="contact" :style="isBottom ? 'width: 100%;' : ''" class="bottom_left">
-        <img src="@/assets/landPage/ic_button_call.png" alt="">
-        <span>立即咨询</span>
-      </a>
-      <a href="#form" :style="isBottom ? 'display: none;' : ''" class="bottom_right">
-        <img src="@/assets/landPage/ic_button_freeapply.png" alt="">
-        <span>免费获取报价</span>
-      </a>
+    <div v-if="showBottomBtn">
+      <div class="bottom_btn" v-if="showConsult">
+        <a href="tel:4001680458" @click="contact" :style="isBottom ? 'width: 100%;' : ''" class="bottom_left">
+          <img src="@/assets/landPage/ic_button_call.png" alt="">
+          <span>立即咨询</span>
+        </a>
+        <a href="#form" :style="isBottom ? 'display: none;' : ''" class="bottom_right">
+          <img src="@/assets/landPage/ic_button_freeapply.png" alt="">
+          <span>免费获取报价</span>
+        </a>
+      </div>
+      <div class="bottom_btn" v-else>
+        <a href="#form" :style="isBottom ? 'display: none;' : ''" class="bottom_right">
+          <img src="@/assets/landPage/ic_button_freeapply.png" alt="">
+          <span>免费获取报价</span>
+        </a>
+      </div>
     </div>
     <van-popup
       v-model="areaShow"
@@ -196,7 +204,9 @@ export default {
         childs: []
       },
       isBottom: false,
-      timer: undefined
+      timer: undefined,
+      showBottomBtn: true,
+      showConsult: false
     }
   },
   created() {
@@ -204,6 +214,7 @@ export default {
   },
   activated() {
     document.title = this.serviceName  + '询价'
+    let h = document.body.scrollHeight
     sa.quick("autoTrackSinglePage",{
       $title: this.serviceName + '落地页',
       $screen_name: `company_logout_page`,
@@ -228,15 +239,26 @@ export default {
       }
     }
     // 微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
-    window.addEventListener('resize', function (e) {
+    window.addEventListener('resize', (e) => {
       if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
-        window.setTimeout(function () {
+        window.setTimeout( () => {
           document.activeElement.scrollIntoViewIfNeeded()
+          if(document.body.scrollHeight < h) {
+            this.showBottomBtn = false
+          } else {
+            this.showBottomBtn = true
+          }
         }, 0)
       }
     })
     // 监听滚动到底部
     window.addEventListener('scroll', this.scrollBottom, true)
+    let currentTime = new Date().getHours()
+    if(currentTime > 8 && currentTime < 19) {
+      this.showConsult = true
+    } else {
+      this.showConsult = false
+    }
   },
   methods: {
     changeRadio(index, selectValue) {
@@ -680,13 +702,12 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 64px;
     background-image: linear-gradient(135deg, #FF7F4A 0%, #FB5332 100%);
     box-shadow: 0 -8px 16px 0 rgba(251,83,50,0.24);
     display: flex;
     .bottom_left {
       width: 120px;
-      height: 100%;
+      height: 64px;
       background: #FFFFFF;
       font-family: PingFangSC-Medium;
       font-size: 15px;
@@ -706,7 +727,7 @@ export default {
     .bottom_right {
       display: block;
       flex: 1;
-      height: 100%;
+      height: 64px;
       img {
         width: 24px;
         height: 24px;

@@ -72,15 +72,23 @@
       <img src="@/assets/landPage/body_04.png" alt="">
       <img src="@/assets/landPage/body_about.png" alt="">
     </div>
-    <div class="bottom_btn">
-      <a href="tel:4001680458" @click="contact" :style="isBottom ? 'width: 100%;' : ''" class="bottom_left">
-        <img src="@/assets/landPage/ic_button_call.png" alt="">
-        <span>立即咨询</span>
-      </a>
-      <a href="#form" :style="isBottom ? 'display: none;' : ''" class="bottom_right">
-        <img src="@/assets/landPage/ic_button_freeapply.png" alt="">
-        <span>免费获取报价</span>
-      </a>
+    <div v-if="showBottomBtn">
+      <div class="bottom_btn" v-if="showConsult">
+        <a href="tel:4001680458" @click="contact" :style="isBottom ? 'width: 100%;' : ''" class="bottom_left">
+          <img src="@/assets/landPage/ic_button_call.png" alt="">
+          <span>立即咨询</span>
+        </a>
+        <a href="#form" :style="isBottom ? 'display: none;' : ''" class="bottom_right">
+          <img src="@/assets/landPage/ic_button_freeapply.png" alt="">
+          <span>免费获取报价</span>
+        </a>
+      </div>
+      <div class="bottom_btn" v-else>
+        <a href="#form" :style="isBottom ? 'display: none;' : ''" class="bottom_right">
+          <img src="@/assets/landPage/ic_button_freeapply.png" alt="">
+          <span>免费获取报价</span>
+        </a>
+      </div>
     </div>
     <van-popup
       v-model="areaShow"
@@ -131,6 +139,8 @@ export default {
         childs: []
       },
       isBottom: false,
+      showBottomBtn: true,
+      showConsult: false,
       timer: undefined,
       jsBase: '(function(r,d,s,l){var meteor=r.meteor=r.meteor||[];meteor.methods=["track","off","on"];meteor.factory=function(method){return function(){ var args=Array.prototype.slice.call(arguments);args.unshift(method);meteor.push(args);return meteor}};for(var i=0;i<meteor.methods.length;i++){ var key=meteor.methods[i];meteor[key]=meteor.factory(key)}meteor.load=function(){var js,fjs=d.getElementsByTagName(s)[0];js=d.createElement(s); js.src="https://analytics.snssdk.com/meteor.js/v1/"+l+"/sdk";fjs.parentNode.insertBefore(js,fjs)};meteor.load();if(meteor.invoked){return} meteor.invoked=true;meteor.track("pageview")})(window,document,"script","1642262414289933");'
     }
@@ -148,6 +158,7 @@ export default {
   },
   activated() {
     document.title = this.serviceName  + '询价'
+    let h = document.body.scrollHeight
     sa.quick("autoTrackSinglePage",{
       $title: this.serviceName + '落地页',
       $screen_name: `company_logout_page`,
@@ -172,15 +183,26 @@ export default {
       }
     }
     // 微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
-    window.addEventListener('resize', function (e) {
+    window.addEventListener('resize', (e) => {
       if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
-        window.setTimeout(function () {
+        window.setTimeout(() => {
           document.activeElement.scrollIntoViewIfNeeded()
+          if(document.body.scrollHeight < h) {
+            this.showBottomBtn = false
+          } else {
+            this.showBottomBtn = true
+          }
         }, 0)
       }
     })
     // 监听滚动到底部
     window.addEventListener('scroll', this.scrollBottom, true)
+    let currentTime = new Date().getHours()
+    if(currentTime > 8 && currentTime < 19) {
+      this.showConsult = true
+    } else {
+      this.showConsult = false
+    }
   },
   methods: {
     changeRadio(index, selectValue) {
@@ -631,13 +653,12 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 64px;
     background-image: linear-gradient(135deg, #FF7F4A 0%, #FB5332 100%);
     box-shadow: 0 -8px 16px 0 rgba(251,83,50,0.24);
     display: flex;
     .bottom_left {
       width: 120px;
-      height: 100%;
+      height: 64px;
       background: #FFFFFF;
       font-family: PingFangSC-Medium;
       font-size: 15px;
@@ -657,7 +678,7 @@ export default {
     .bottom_right {
       display: block;
       flex: 1;
-      height: 100%;
+      height: 64px;
       img {
         width: 24px;
         height: 24px;
