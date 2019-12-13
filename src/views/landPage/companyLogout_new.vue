@@ -1,15 +1,11 @@
 <template>
   <div class="companyRegister_page" id="companyRegister_page">
     <div class="header_img">
-      <img src="@/assets/landPage/head.png" alt="">
+      <img src="@/assets/landPage/logout_head.png" alt="">
     </div>
-    <div style="padding-top: 10px;" id="form">
-      <div class="notice">
-        <img src="@/assets/landPage/ic_notice.png" alt="">
-        <span>目前已经有<i>1127人</i>参与活动</span>
-      </div>
-    </div>
+    <div style="padding-top: 10px;" id="form"></div>
     <div class="form">
+      <div class="form_title">算一算公司注销报价</div>
       <div class="formItem">
         <label>电话<span>(加密, 放心填)*</span></label>
         <input maxlength="11" v-model="phone" type="tel" placeholder="请输入电话">
@@ -25,12 +21,17 @@
       </div>
     </div>
     <div class="intro_img">
-      <img src="@/assets/landPage/body_procedure.png" alt="">
-      <img src="@/assets/landPage/body_compare.png" alt="">
-    </div>
-    <div class="notice">
-      <img src="@/assets/landPage/ic_notice.png" alt="">
-      <span>目前已经有<i>1127人</i>参与活动</span>
+      <img src="@/assets/landPage/body_01.png" alt="">
+      <img src="@/assets/landPage/body_02.png" alt="">
+      <a href="#form" class="jumpBtn">
+        <img src="@/assets/landPage/button_mid_01.png" alt="">
+      </a>
+      <img src="@/assets/landPage/body_03.png" alt="">
+      <a href="#form" class="jumpBtn">
+        <img src="@/assets/landPage/button_mid_02.png" alt="">
+      </a>
+      <img src="@/assets/landPage/body_04.png" alt="">
+      <img src="@/assets/landPage/body_about.png" alt="">
     </div>
     <div class="form">
       <div class="formItem">
@@ -47,12 +48,6 @@
         <van-button id="submitForm" type="primary" size="large" @click="submitForm">抢0元注册公司，最快3天办好</van-button>
       </div>
     </div>
-    <div class="counselPhone">
-      咨询电话：400-168-0458
-    </div>
-    <a href="#form" class="fixed_bth">
-      <img src="@/assets/landPage/ic_fill_flow.png" alt="">
-    </a>
     <div v-if="showBottomBtn">
       <div class="bottom_btn" v-if="showConsult">
         <a href="tel:4001680458" @click="contact" :style="isBottom ? 'width: 100%;' : ''" class="bottom_left">
@@ -60,14 +55,14 @@
           <span>立即咨询</span>
         </a>
         <a href="#form" :style="isBottom ? 'display: none;' : ''" class="bottom_right">
-          <img src="@/assets/landPage/ic_button_apply.png" alt="">
-          <span>0元注册公司，快速申请</span>
+          <img src="@/assets/landPage/ic_button_freeapply.png" alt="">
+          <span>免费获取报价</span>
         </a>
       </div>
       <div class="bottom_btn" v-else>
         <a href="#form" :style="isBottom ? 'display: none;' : ''" class="bottom_right">
-          <img src="@/assets/landPage/ic_button_apply.png" alt="">
-          <span>0元注册公司，快速申请</span>
+          <img src="@/assets/landPage/ic_button_freeapply.png" alt="">
+          <span>免费获取报价</span>
         </a>
       </div>
     </div>
@@ -94,8 +89,8 @@ export default {
   name: 'companyRegister-new',
   data() {
     return {
-      serviceCode: '101001',
-      serviceName: '公司注册',
+      serviceCode: '101004',
+      serviceName: '公司注销',
       inputList: [],
       name: '',
       phone: '',
