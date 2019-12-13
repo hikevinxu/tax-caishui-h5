@@ -1,5 +1,5 @@
 <template>
-  <div class="companyRegister_page" id="companyRegister_page">
+  <div class="companyRegister_new_page" id="companyRegister_page">
     <div class="header_img">
       <img src="@/assets/landPage/head.png" alt="">
     </div>
@@ -306,7 +306,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.companyRegister_page {
+.companyRegister_new_page {
   background-color: #fff;
   margin-bottom: 88px;
   min-height: 100vh;
@@ -611,7 +611,7 @@ export default {
       line-height: 40px;
       position: relative;
       border: 0;
-      background-image: linear-gradient(135deg, #FFAD71 0%, #FF7F4A 100%);
+      background-image: linear-gradient(135deg, #FF7F4A 0%, #FB5332 100%);
       border-radius: 2px;
       color: #fff;
       margin-top: 20px;
@@ -669,7 +669,9 @@ export default {
 }
 </style>
 <style lang="scss">
-.van-popup--center.van-popup--round {
-  border-radius: 10px;
+.companyRegister_new_page {
+  .van-popup--center.van-popup--round {
+    border-radius: 10px;
+  }
 }
 </style>

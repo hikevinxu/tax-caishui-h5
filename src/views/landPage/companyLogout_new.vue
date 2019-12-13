@@ -1,5 +1,5 @@
 <template>
-  <div class="companyRegister_page" id="companyRegister_page">
+  <div class="companyLogout_new_page" id="companyLogout_new_page">
     <div class="header_img">
       <img src="@/assets/landPage/logout_head.png" alt="">
     </div>
@@ -17,7 +17,7 @@
       </div>
       <div id="captcha"></div>
       <div class="submitBtn">
-        <van-button id="submitForm" type="primary" size="large" @click="submitForm">抢0元注册公司，最快3天办好</van-button>
+        <van-button id="submitForm" type="primary" size="large" @click="submitForm">免费获取报价</van-button>
       </div>
     </div>
     <div class="intro_img">
@@ -34,6 +34,7 @@
       <img src="@/assets/landPage/body_about.png" alt="">
     </div>
     <div class="form">
+      <div class="form_title">算一算公司注销报价</div>
       <div class="formItem">
         <label>电话<span>(加密, 放心填)*</span></label>
         <input maxlength="11" v-model="phone" type="tel" placeholder="请输入电话">
@@ -45,7 +46,7 @@
       </div>
       <div id="captcha"></div>
       <div class="submitBtn">
-        <van-button id="submitForm" type="primary" size="large" @click="submitForm">抢0元注册公司，最快3天办好</van-button>
+        <van-button id="submitForm" type="primary" size="large" @click="submitForm">免费获取报价</van-button>
       </div>
     </div>
     <div v-if="showBottomBtn">
@@ -301,7 +302,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.companyRegister_page {
+.companyLogout_new_page {
   background-color: #fff;
   margin-bottom: 88px;
   min-height: 100vh;
@@ -342,6 +343,17 @@ export default {
     border-radius: 4px;
     border-radius: 4px;
     padding: 16px;
+    .form_title {
+      width: 100%;
+      height: 18px;
+      background: #FAFAFA;
+      font-family: PingFangSC-Semibold;
+      font-size: 16px;
+      color: #3F8C7F;
+      text-align: center;
+      line-height: 16px;
+      margin-bottom: 16px;
+    }
     .formItem {
       margin-bottom: 16px;
       position: relative;
@@ -371,19 +383,7 @@ export default {
         line-height: 20px;
         border-bottom: 1px solid rgba(0,0,0,0.12);
         &:focus {
-          border-bottom: 1px solid #FB5332;
-        }
-      }
-      .selectLogo {
-        width: 16px;
-        height: 16px;
-        position: absolute;
-        bottom: 10px;
-        right: 0;
-        img {
-          display: block;
-          width: 100%;
-          height: 100%;
+          border-bottom: 1px solid #3F8C7F;
         }
       }
       .getYZM {
@@ -399,79 +399,6 @@ export default {
         padding-right: 120px;
       }
     }
-    .formSelectItem {
-      margin-bottom: 16px;
-      position: relative;
-      label {
-        display: block;
-        font-family: PingFangSC-Medium;
-        font-size: 14px;
-        color: rgba(0,0,0,0.87);
-        text-align: left;
-        line-height: 20px;
-        margin-left: 8px;
-        i {
-          font-size: 12px;
-          color: rgba(0,0,0,0.38);
-          line-height: 18px;
-          margin-left: 4px;
-        }
-        span {
-          font-size: 12px;
-          color: #FB5332;
-          line-height: 18px;
-        }
-      }
-      .selectList {
-        overflow: hidden;
-        .selectList_item {
-          float: left;
-          min-width: 50%;
-          height: 32px;
-          box-sizing: border-box;
-          line-height: 32px;
-          padding: 0 8px;
-          margin-top: 4px;
-          display: flex;
-          .selectLogoImg {
-            width: 16px;
-            height: 16px;
-            margin-top: 8px;
-            img {
-              display: block;
-              width: 100%;
-              height: 100%;
-            }
-          }
-          .selectText {
-            flex: 1;
-            font-family: PingFangSC-Regular;
-            font-size: 13px;
-            color: rgba(0,0,0,0.60);
-            text-align: left;
-            line-height: 32px;
-            margin-left: 8px;
-          }
-          .selectText.select {
-            text-decoration: #FF7F4A;
-          }
-        }
-      }
-      .selectCity {
-        // width: 50%;
-        position: absolute;
-        top: 0;
-        right: 0;
-        font-family: PingFangSC-Regular;
-        font-size: 11px;
-        color: rgba(0,0,0,0.60);
-        text-align: left;
-        line-height: 20px;
-        margin-left: 8px;
-        box-sizing: border-box;
-        padding: 0 8px;
-      }
-    }
     .submitBtn {
       height: 40px;
       margin-bottom: 8px;
@@ -480,8 +407,8 @@ export default {
         height: 40px;
         line-height: 40px;
         border: 0;
-        background-image: linear-gradient(135deg, #FF7F4A 0%, #FB5332 100%);
-        box-shadow: 0 4px 8px 0 rgba(251,83,50,0.24);
+        background-image: linear-gradient(135deg, #5AB3A4 0%, #007C61 100%);
+        box-shadow: 0 4px 8px 0 rgba(19,112,98,0.24);
         border-radius: 4px;
         .van-button__text {
           font-family: PingFangSC-Medium;
@@ -495,6 +422,10 @@ export default {
   }
   .intro_img {
     width: 100%;
+    .jumpBtn {
+      display: block;
+      margin: 8px 72px;
+    }
     img {
       display: block;
       width: 100%;
@@ -606,7 +537,7 @@ export default {
       line-height: 40px;
       position: relative;
       border: 0;
-      background-image: linear-gradient(135deg, #FFAD71 0%, #FF7F4A 100%);
+      background-image: linear-gradient(135deg, #5AB3A4 0%, #007C61 100%);
       border-radius: 2px;
       color: #fff;
       margin-top: 20px;
@@ -664,7 +595,9 @@ export default {
 }
 </style>
 <style lang="scss">
-.van-popup--center.van-popup--round {
-  border-radius: 10px;
+.companyLogout_new_page {
+  .van-popup--center.van-popup--round {
+    border-radius: 10px;
+  }
 }
 </style>
